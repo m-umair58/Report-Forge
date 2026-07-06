@@ -1,0 +1,31 @@
+{
+  "name": "@reportforge/display-list",
+  "version": "0.0.0",
+  "description": "Renderer-independent Display List for ReportForge",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@reportforge/shared": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
