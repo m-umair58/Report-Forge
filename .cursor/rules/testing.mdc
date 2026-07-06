@@ -1,0 +1,11 @@
+# Testing
+
+Every public component requires unit tests.
+
+Bug fixes require regression tests.
+
+Avoid mocking unless necessary.
+
+Tests should be deterministic.
+
+Aim for high coverage of core functionality.

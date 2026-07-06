@@ -1,0 +1,19 @@
+# Coding Style
+
+Keep functions small.
+
+Prefer pure functions.
+
+Avoid global mutable state.
+
+Single responsibility.
+
+Meaningful names.
+
+No abbreviations.
+
+Avoid deeply nested code.
+
+Favor readability over cleverness.
+
+Keep files focused.

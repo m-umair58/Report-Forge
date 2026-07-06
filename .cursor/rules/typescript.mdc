@@ -1,0 +1,19 @@
+# TypeScript Rules
+
+Use strict mode.
+
+Never use any.
+
+Prefer unknown.
+
+Prefer interfaces for public contracts.
+
+Use readonly where appropriate.
+
+Prefer discriminated unions.
+
+Avoid enums unless necessary.
+
+Export types separately from implementations.
+
+Public APIs must be fully typed.

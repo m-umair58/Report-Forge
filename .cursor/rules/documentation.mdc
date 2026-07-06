@@ -1,0 +1,11 @@
+# Documentation
+
+Every public class requires documentation.
+
+Every exported function requires documentation.
+
+Complex algorithms require comments explaining WHY instead of WHAT.
+
+Examples are required for public APIs.
+
+Breaking changes require documentation updates.

@@ -1,0 +1,27 @@
+# API Design
+
+The API must feel natural.
+
+Good:
+
+report.title(...)
+
+report.table(...)
+
+report.footer(...)
+
+Bad:
+
+drawText()
+
+drawLine()
+
+moveTo()
+
+Never expose PDF concepts.
+
+The public API should describe business reports.
+
+Every API should be chainable when possible.
+
+Favor fluent interfaces.

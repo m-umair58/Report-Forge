@@ -1,0 +1,33 @@
+# Architecture Rules
+
+Always separate:
+
+Public API
+
+↓
+
+Component Tree
+
+↓
+
+Report Schema
+
+↓
+
+Layout Engine
+
+↓
+
+Renderer
+
+↓
+
+Output
+
+Never place rendering logic inside core.
+
+Never couple layout with PDF rendering.
+
+Everything should communicate through interfaces.
+
+Prefer composition over inheritance.

@@ -1,0 +1,27 @@
+# ReportForge Project
+
+## Mission
+
+ReportForge is a reporting framework.
+
+It is NOT a PDF library.
+
+Developers describe reports.
+
+The framework determines layout.
+
+The renderer generates the output.
+
+## Vision
+
+Build the best open-source reporting framework for Node.js.
+
+Developer experience is the highest priority.
+
+## Principles
+
+- Beautiful API
+- Extensible
+- Renderer independent
+- Type-safe
+- Production-ready

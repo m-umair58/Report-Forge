@@ -1,0 +1,13 @@
+# Performance
+
+Avoid unnecessary allocations.
+
+Design for large reports.
+
+Streaming should be considered where appropriate.
+
+Avoid quadratic algorithms.
+
+Minimize dependencies.
+
+Tree-shakeable modules only.
