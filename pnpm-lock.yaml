@@ -56,7 +56,11 @@ importers:
         specifier: workspace:*
         version: link:../shared
 
-  packages/layout: {}
+  packages/layout:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
 
   packages/renderer-pdf: {}
 
