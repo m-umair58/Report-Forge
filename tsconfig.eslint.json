@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true
+  },
+  "include": [
+    "eslint.config.js",
+    "commitlint.config.js",
+    "vitest.config.ts",
+    "packages/cli/vitest.config.ts",
+    "packages/cli/tsup.config.ts",
+    "packages/core/vitest.config.ts",
+    "packages/core/tsup.config.ts",
+    "packages/layout/vitest.config.ts",
+    "packages/layout/tsup.config.ts",
+    "packages/renderer-pdf/vitest.config.ts",
+    "packages/renderer-pdf/tsup.config.ts",
+    "packages/shared/vitest.config.ts",
+    "packages/shared/tsup.config.ts",
+    "packages/templates/vitest.config.ts",
+    "packages/templates/tsup.config.ts",
+    "packages/themes/vitest.config.ts",
+    "packages/themes/tsup.config.ts"
+  ]
+}
