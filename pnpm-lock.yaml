@@ -50,6 +50,9 @@ importers:
 
   examples:
     dependencies:
+      '@reportforge/charts':
+        specifier: workspace:*
+        version: link:../packages/charts
       '@reportforge/components':
         specifier: workspace:*
         version: link:../packages/components
@@ -63,6 +66,21 @@ importers:
       tsx:
         specifier: ^4.19.3
         version: 4.23.0
+
+  packages/chart-core:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/charts:
+    dependencies:
+      '@reportforge/chart-core':
+        specifier: workspace:*
+        version: link:../chart-core
+      '@reportforge/components':
+        specifier: workspace:*
+        version: link:../components
 
   packages/cli: {}
 
@@ -102,12 +120,18 @@ importers:
 
   packages/display-list:
     dependencies:
+      '@reportforge/chart-core':
+        specifier: workspace:*
+        version: link:../chart-core
       '@reportforge/shared':
         specifier: workspace:*
         version: link:../shared
 
   packages/layout:
     dependencies:
+      '@reportforge/chart-core':
+        specifier: workspace:*
+        version: link:../chart-core
       '@reportforge/shared':
         specifier: workspace:*
         version: link:../shared

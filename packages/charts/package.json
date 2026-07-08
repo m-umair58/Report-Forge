@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/layout",
+  "name": "@reportforge/charts",
   "version": "0.0.0",
-  "description": "Layout engine for ReportForge",
+  "description": "Chart component factories for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,9 +24,7 @@
   },
   "dependencies": {
     "@reportforge/chart-core": "workspace:*",
-    "@reportforge/shared": "workspace:*",
-    "@reportforge/table": "workspace:*",
-    "@reportforge/theme": "workspace:*"
+    "@reportforge/components": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

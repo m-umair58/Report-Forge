@@ -378,9 +378,9 @@ describe('estimateNodeHeight', () => {
     expect(estimateNodeHeight(node, contentWidth, theme)).toBe(100);
   });
 
-  it('chart: 200pt placeholder', () => {
-    const node = makeNode('ch1', 'chart', { type: 'bar' });
-    expect(estimateNodeHeight(node, contentWidth, theme)).toBe(200);
+  it('chart: default height from chart engine', () => {
+    const node = makeNode('ch1', 'chart', { type: 'bar', data: [{ month: 'Jan', value: 1 }], legend: 'hidden' });
+    expect(estimateNodeHeight(node, contentWidth, theme)).toBe(240);
   });
 
   it('summary-card: 60pt placeholder', () => {

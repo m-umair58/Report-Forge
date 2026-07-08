@@ -11,12 +11,17 @@
     "sales-table": "tsx sales-table.ts",
     "inventory-table": "tsx inventory-table.ts",
     "financial-report": "tsx financial-report.ts",
+    "financial-report-charts": "tsx financial-report-charts.ts",
+    "sales-dashboard": "tsx sales-dashboard.ts",
+    "healthcare-dashboard": "tsx healthcare-dashboard.ts",
+    "manufacturing-report": "tsx manufacturing-report.ts",
     "corporate-theme": "tsx corporate-theme.ts",
     "dark-theme": "tsx dark-theme.ts",
     "healthcare-theme": "tsx healthcare-theme.ts",
     "financial-theme": "tsx financial-theme.ts"
   },
   "dependencies": {
+    "@reportforge/charts": "workspace:*",
     "@reportforge/components": "workspace:*",
     "@reportforge/core": "workspace:*",
     "@reportforge/themes": "workspace:*"
