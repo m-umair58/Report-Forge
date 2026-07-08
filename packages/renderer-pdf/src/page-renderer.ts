@@ -112,10 +112,7 @@ export class PageRenderer {
         break;
 
       case 'draw-path':
-        warnings.push(
-          `[draw-path] SVG path rendering is not yet implemented — ` +
-            `skipping node '${command.sourceNodeId}'`,
-        );
+        this._shapeRenderer.renderPath(page, command, pageHeight, warnings);
         break;
 
       case 'draw-polygon':

@@ -134,14 +134,18 @@ function validatePropValues(descriptor: ComponentDescriptor, path: string): Comp
       break;
     }
 
-    case 'chart':
+    case 'chart': {
       if (!isNonEmptyString(props['type'])) {
         errors.push(issue(`'chart' requires 'type'.`, path));
       }
-      if (props['data'] === undefined || typeof props['data'] !== 'object') {
+      const data = props['data'];
+      if (data === undefined || (typeof data !== 'object' && !Array.isArray(data))) {
         errors.push(issue(`'chart' requires 'data'.`, path));
+      } else if (Array.isArray(data) && data.length === 0) {
+        errors.push(issue(`'chart' data array must not be empty.`, path));
       }
       break;
+    }
   }
 
   if (descriptor.style?.opacity !== undefined) {

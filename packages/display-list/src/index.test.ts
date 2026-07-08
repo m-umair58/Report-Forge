@@ -269,16 +269,25 @@ describe('DisplayListGenerator', () => {
       expect(cmd?.alt).toBe('Logo');
     });
 
-    it('chart → [DrawRectangle, DrawText] placeholder', () => {
-      const layout = makeLayout([makeElement('ch1', 'chart', { title: 'Revenue' })]);
+    it('chart → scene graph draw commands', () => {
+      const layout = makeLayout([
+        makeElement('ch1', 'chart', {
+          type: 'bar',
+          title: 'Revenue',
+          data: [
+            { month: 'Jan', amount: 100 },
+            { month: 'Feb', amount: 120 },
+          ],
+          x: 'month',
+          y: 'amount',
+          legend: 'hidden',
+        }),
+      ]);
       const dl = generator.generate(layout);
       const cmds = dl.pages[0]?.commands ?? [];
 
-      expect(cmds).toHaveLength(2);
-      expect(cmds[0]?.kind).toBe('draw-rectangle');
-      expect(cmds[1]?.kind).toBe('draw-text');
-      const text = cmds[1] as DrawTextCommand;
-      expect(text.text).toContain('Revenue');
+      expect(cmds.length).toBeGreaterThan(2);
+      expect(cmds.some((cmd) => cmd.kind === 'draw-line' || cmd.kind === 'draw-rectangle')).toBe(true);
     });
 
     it('summary-card → [DrawRectangle, DrawText × 2]', () => {

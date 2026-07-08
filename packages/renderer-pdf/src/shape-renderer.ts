@@ -4,6 +4,7 @@ import type {
   DrawCircleCommand,
   DrawEllipseCommand,
   DrawLineCommand,
+  DrawPathCommand,
   DrawRectangleCommand,
 } from '@reportforge/display-list';
 
@@ -141,6 +142,29 @@ export class ShapeRenderer {
     });
   }
 
+  renderPath(page: PDFPage, cmd: DrawPathCommand, pageHeight: number, warnings: string[]): void {
+    if (cmd.pathData.trim().length === 0) {
+      warnings.push(`[draw-path] Empty path for node '${cmd.sourceNodeId}' — skipping`);
+      return;
+    }
+
+    const fillColor = parseColorWithNames(cmd.fillColor);
+    const strokeColor = parseColorWithNames(cmd.strokeColor);
+
+    if (fillColor === null && strokeColor === null) {
+      warnings.push(`[draw-path] No fill or stroke for node '${cmd.sourceNodeId}' — skipping`);
+      return;
+    }
+
+    page.drawSvgPath(flipPathY(cmd.pathData, pageHeight), {
+      ...(fillColor !== null ? { color: fillColor } : {}),
+      ...(strokeColor !== null
+        ? { borderColor: strokeColor, borderWidth: cmd.strokeWidth > 0 ? cmd.strokeWidth : 0.5 }
+        : {}),
+      opacity: cmd.opacity,
+    });
+  }
+
   private drawRoundedRectangle(
     page: PDFPage,
     cmd: DrawRectangleCommand,
@@ -175,4 +199,32 @@ export class ShapeRenderer {
       opacity: cmd.opacity,
     });
   }
+}
+
+/** Flips SVG path Y coordinates from top-left page space to PDF bottom-left space. */
+function flipPathY(pathData: string, pageHeight: number): string {
+  return pathData.replace(
+    /([MLCQAZ])\s*([0-9.\-\s,]+)/gi,
+    (_match, command: string, coords: string) => {
+      const numbers = coords
+        .trim()
+        .split(/[\s,]+/)
+        .filter((part) => part.length > 0)
+        .map((part) => Number(part));
+
+      if (command.toUpperCase() === 'A') {
+        for (let i = 0; i + 6 < numbers.length; i += 7) {
+          const y = numbers[i + 6];
+          if (y !== undefined) numbers[i + 6] = pageHeight - y;
+        }
+      } else {
+        for (let i = 1; i < numbers.length; i += 2) {
+          const y = numbers[i];
+          if (y !== undefined) numbers[i] = pageHeight - y;
+        }
+      }
+
+      return `${command} ${numbers.join(' ')}`;
+    },
+  );
 }

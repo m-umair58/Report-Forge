@@ -172,13 +172,33 @@ export interface ChartData {
   readonly datasets: readonly ChartDataset[];
 }
 
-export type ChartType = 'bar' | 'line' | 'pie' | 'area';
+export type ChartType =
+  | 'bar'
+  | 'horizontal-bar'
+  | 'line'
+  | 'area'
+  | 'pie'
+  | 'doughnut'
+  | 'scatter'
+  | 'heatmap'
+  | 'treemap'
+  | 'radar'
+  | 'gauge';
 
-/** Placeholder chart props — chart rendering is a future milestone. */
+export type ChartLegendPosition = 'top' | 'bottom' | 'left' | 'right' | 'hidden';
+
+/** Chart props — data may be row-oriented objects or legacy labels/datasets. */
 export interface ChartProps extends BaseComponentProps {
   readonly type: ChartType;
   readonly title?: string;
-  readonly data: ChartData;
+  readonly data: ChartData | readonly Readonly<Record<string, unknown>>[];
+  readonly x?: string;
+  readonly y?: string | readonly string[];
+  readonly series?: string;
+  readonly width?: number;
+  readonly height?: number;
+  readonly legend?: ChartLegendPosition;
+  readonly innerRadius?: number;
 }
 
 export interface QRCodeProps extends BaseComponentProps {

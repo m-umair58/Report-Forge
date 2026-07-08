@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/layout",
+  "name": "@reportforge/chart-core",
   "version": "0.0.0",
-  "description": "Layout engine for ReportForge",
+  "description": "Renderer-independent chart engine for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,10 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@reportforge/chart-core": "workspace:*",
-    "@reportforge/shared": "workspace:*",
-    "@reportforge/table": "workspace:*",
-    "@reportforge/theme": "workspace:*"
+    "@reportforge/shared": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

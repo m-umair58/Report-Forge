@@ -1,4 +1,5 @@
 import type { LayoutElement, LayoutOutput } from '@reportforge/shared';
+import { buildChartLayoutPayload, chartThemeFromReportTheme } from '@reportforge/chart-core';
 
 import type {
   DisplayCommand,
@@ -10,6 +11,7 @@ import type {
   DrawTableCommand,
   DrawTextCommand,
 } from './commands.js';
+import { sceneGraphToDisplayCommands } from './chart-commands.js';
 import { DisplayListError } from './errors.js';
 import { optimizePages } from './optimizer.js';
 import type { OptimizerOptions } from './optimizer.js';
@@ -389,47 +391,18 @@ function generateImageCommand(element: LayoutElement, ctx: DisplayContext): Draw
 }
 
 /**
- * Converts a chart element into a placeholder DrawRectangle + DrawText.
- * A future milestone will replace this with real chart rendering commands.
+ * Converts a chart element into display commands via the chart scene graph pipeline.
  */
-function generateChartCommands(
-  element: LayoutElement,
-  ctx: DisplayContext,
-): [DrawRectangleCommand, DrawTextCommand] {
-  const background: DrawRectangleCommand = {
-    kind: 'draw-rectangle',
-    sourceNodeId: element.nodeId,
-    x: element.x,
-    y: element.y,
-    width: element.width,
-    height: element.height,
-    fillColor: '#f0f4ff',
-    borderColor: DEFAULT_BORDER_COLOR,
-    borderWidth: 0.5,
-    cornerRadius: 2,
-    opacity: ctx.defaultOpacity,
-  };
+function generateChartCommands(element: LayoutElement, ctx: DisplayContext): DisplayCommand[] {
+  const chartTheme = chartThemeFromReportTheme(undefined);
+  const payload = buildChartLayoutPayload(element.props, element.width, chartTheme);
 
-  const chartTitle = propString(element.props, 'title', '');
-  const label: DrawTextCommand = {
-    kind: 'draw-text',
+  return sceneGraphToDisplayCommands(payload.sceneGraph, {
     sourceNodeId: element.nodeId,
-    text: chartTitle.length > 0 ? `Chart: ${chartTitle}` : 'Chart (placeholder)',
-    font: ctx.defaultFont,
-    fontSize: ctx.defaultFontSize,
-    fontWeight: 'normal',
-    lineHeight: DEFAULT_LINE_HEIGHT,
-    color: '#888888',
-    x: element.x + 8,
-    y: element.y + element.height / 2 - ctx.defaultFontSize / 2,
-    width: element.width - 16,
-    height: ctx.defaultFontSize * DEFAULT_LINE_HEIGHT,
-    rotation: 0,
-    opacity: ctx.defaultOpacity,
-    textAlign: 'center',
-  };
-
-  return [background, label];
+    offsetX: element.x,
+    offsetY: element.y,
+    defaultOpacity: ctx.defaultOpacity,
+  });
 }
 
 /**
@@ -544,7 +517,7 @@ function generateBarcodeCommand(element: LayoutElement, ctx: DisplayContext): Dr
  * | footer        | DrawRectangle (light background with top border)   |
  * | table         | DrawTable (placeholder — renderer decomposes)      |
  * | image         | DrawImage (placeholder with empty src if missing)  |
- * | chart         | DrawRectangle + DrawText (placeholder)             |
+ * | chart         | Scene graph → draw commands (bars, lines, pie, etc.) |
  * | summary-card  | DrawRectangle + DrawText × 2 (label + value)       |
  * | qr-code       | DrawQRCode (placeholder — renderer encodes)        |
  * | barcode       | DrawBarcode (placeholder — renderer encodes)       |
@@ -599,7 +572,7 @@ function elementToCommands(element: LayoutElement, ctx: DisplayContext): Display
       return [...generateIconCommands(element, ctx)];
 
     case 'chart':
-      return [...generateChartCommands(element, ctx)];
+      return generateChartCommands(element, ctx);
 
     case 'summary-card':
       return [...generateSummaryCardCommands(element, ctx)];

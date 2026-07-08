@@ -591,7 +591,7 @@ describe('PdfRenderer', () => {
       expect(result.warnings.some((w) => w.includes('draw-image'))).toBe(true);
     });
 
-    it('emits warnings for draw-path (unsupported)', async () => {
+    it('renders draw-path without unsupported warnings', async () => {
       const cmd = {
         kind: 'draw-path' as const,
         sourceNodeId: 'path1',
@@ -603,7 +603,7 @@ describe('PdfRenderer', () => {
       };
       const dl = makeDisplayList([cmd]);
       const result = await renderer.renderWithDiagnostics(dl);
-      expect(result.warnings.some((w) => w.includes('draw-path'))).toBe(true);
+      expect(result.warnings.some((w) => w.includes('not yet implemented'))).toBe(false);
     });
 
     it('renders rounded rectangles without warnings', async () => {

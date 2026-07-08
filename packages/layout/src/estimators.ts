@@ -1,4 +1,5 @@
 import type { IReportNode, ITheme } from '@reportforge/shared';
+import { estimateChartHeight } from '@reportforge/chart-core';
 import { estimateTableHeight } from '@reportforge/table';
 
 import { themeToTableTheme } from './table-theme.js';
@@ -130,9 +131,12 @@ export function estimateNodeHeight(node: IReportNode, contentWidth: number, them
       // Placeholder: 100pt ≈ 35mm. Real size comes from image metadata.
       return 100;
 
-    case 'chart':
-      // Placeholder: 200pt ≈ 70mm. Real size depends on chart configuration.
-      return 200;
+    case 'chart': {
+      const title = typeof node.props['title'] === 'string' ? node.props['title'] : undefined;
+      const legend = node.props['legend'] as 'top' | 'bottom' | 'left' | 'right' | 'hidden' | undefined;
+      const height = typeof node.props['height'] === 'number' ? node.props['height'] : undefined;
+      return estimateChartHeight(title !== undefined, legend, height);
+    }
 
     case 'summary-card':
       // Placeholder: a compact card with label, value, and trend line.
