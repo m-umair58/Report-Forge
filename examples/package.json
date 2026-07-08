@@ -7,7 +7,10 @@
   "type": "module",
   "scripts": {
     "hello-world": "tsx hello-world.ts",
-    "simple-report": "tsx simple-report.ts"
+    "simple-report": "tsx simple-report.ts",
+    "sales-report": "tsx sales-report.ts",
+    "invoice": "tsx invoice.ts",
+    "image-demo": "tsx image-demo.ts"
   },
   "dependencies": {
     "@reportforge/core": "workspace:*"

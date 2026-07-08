@@ -1,7 +1,8 @@
 import type { DisplayList } from '@reportforge/display-list';
 
 import { PdfRendererError } from './errors.js';
-import { renderCommand } from './minimal-commands.js';
+import type { CustomFontRegistration } from './fonts.js';
+import { FontManager } from './fonts.js';
 import { PdfDocument } from './pdf-document.js';
 
 // ─── Render options ───────────────────────────────────────────────────────────
@@ -25,6 +26,10 @@ export interface PdfRenderOptions {
   readonly creator?: string;
   /** When false, the PDF is human-readable (useful for debugging). @default true */
   readonly compress?: boolean;
+  /** Full-page background colour applied to every page (hex or named colour). */
+  readonly pageBackground?: string;
+  /** Base directory for resolving relative image paths. @default process.cwd() */
+  readonly basePath?: string;
 }
 
 // ─── Metadata helpers ─────────────────────────────────────────────────────────
@@ -43,68 +48,84 @@ function metaKeywords(meta: Readonly<Record<string, unknown>>, key: string): str
   return isStringArray(v) ? v : undefined;
 }
 
+function resolvePageBackground(
+  displayList: DisplayList,
+  options: PdfRenderOptions,
+): string | null {
+  const fromOptions = options.pageBackground;
+  if (fromOptions !== undefined) return fromOptions;
+
+  const fromMeta = metaString(displayList.metadata, 'pageBackground');
+  if (fromMeta !== undefined) return fromMeta;
+
+  const legacy = metaString(displayList.metadata, 'backgroundColor');
+  return legacy ?? null;
+}
+
 // ─── PdfRenderer ──────────────────────────────────────────────────────────────
 
 /**
- * Minimal PDF renderer for the ReportForge vertical slice.
+ * Production PDF renderer for ReportForge.
  *
  * Converts a renderer-independent `DisplayList` into PDF bytes using pdf-lib.
- * This renderer is **intentionally minimal** — it exists to validate the
- * complete pipeline, not to be the final PDF implementation.
- *
- * ## Supported components (vertical slice)
- *
- * | Component | Render command |
- * |-----------|----------------|
- * | Title     | draw-text      |
- * | Paragraph | draw-text      |
- * | Divider   | draw-line      |
- *
- * All other display commands are ignored with a warning.
- *
- * ## Pipeline position
+ * Rendering is delegated through a dedicated pipeline:
  *
  * ```
- * DisplayListGenerator.generate(layout) → DisplayList
- *                                              ↓
- * PdfRenderer.render(displayList)   → Uint8Array (PDF bytes)
+ * PdfRenderer → PageRenderer → TextRenderer / ShapeRenderer / ImageRenderer
+ *                            → FontManager / ImageManager
  * ```
- *
- * @example
- * const renderer = new PdfRenderer();
- * const pdfBytes = await renderer.render(displayList);
- * await writeFile('report.pdf', pdfBytes);
  */
 export class PdfRenderer {
   readonly name = 'reportforge-pdf-renderer' as const;
   readonly mimeTypes = ['application/pdf'] as const;
 
+  private readonly _fontManager: FontManager;
+  private readonly _pendingFontRegistrations: CustomFontRegistration[] = [];
+
+  constructor(fontManager?: FontManager) {
+    this._fontManager = fontManager ?? new FontManager();
+  }
+
   /**
-   * Renders a `DisplayList` to PDF bytes.
+   * Registers a font for use during rendering.
    *
-   * @throws {PdfRendererError} If the PDF document cannot be created or saved.
+   * Custom TTF/OTF embedding via raw bytes is reserved for a future release.
+   * Today, registrations can alias names to built-in standard fonts.
+   *
+   * @example
+   * renderer.registerFont('Brand Sans', { standardFont: StandardFonts.Helvetica });
    */
+  registerFont(registration: CustomFontRegistration): this {
+    this._fontManager.register(registration);
+    this._pendingFontRegistrations.push(registration);
+    return this;
+  }
+
   async render(displayList: DisplayList, options: PdfRenderOptions = {}): Promise<Uint8Array> {
     const result = await this.renderWithDiagnostics(displayList, options);
     return result.bytes;
   }
 
-  /**
-   * Renders a `DisplayList` and returns bytes plus diagnostic information.
-   */
   async renderWithDiagnostics(
     displayList: DisplayList,
     options: PdfRenderOptions = {},
   ): Promise<PdfRenderResult> {
     let pdfDoc: PdfDocument;
     try {
-      pdfDoc = await PdfDocument.create();
+      const createOptions =
+        options.basePath !== undefined ? { basePath: options.basePath } : undefined;
+      pdfDoc = await PdfDocument.create(this._fontManager, createOptions);
     } catch (cause) {
       throw new PdfRendererError('Failed to create PDF document', { cause });
     }
 
-    const meta = displayList.metadata;
+    for (const registration of this._pendingFontRegistrations) {
+      if (registration.bytes !== undefined) {
+        // Custom embedding is intentionally deferred — registration is stored only.
+      }
+    }
 
+    const meta = displayList.metadata;
     const metadata: {
       title?: string;
       author?: string;
@@ -128,6 +149,8 @@ export class PdfRenderer {
     pdfDoc.setMetadata(metadata);
 
     const warnings: string[] = [];
+    const pageBackground = resolvePageBackground(displayList, options);
+    const pageRenderer = pdfDoc.pageRenderer;
 
     for (const displayPage of displayList.pages) {
       let page;
@@ -140,16 +163,15 @@ export class PdfRenderer {
         );
       }
 
-      for (const command of displayPage.commands) {
-        try {
-          renderCommand(page, command, warnings);
-        } catch (cause) {
-          throw new PdfRendererError(
-            `Error rendering command '${command.kind}' on page ${displayPage.pageNumber.toString()} ` +
-              `(node '${command.sourceNodeId}')`,
-            { nodeId: command.sourceNodeId, cause },
-          );
-        }
+      pageRenderer.drawBackground(page, displayPage, pageBackground);
+
+      try {
+        await pageRenderer.renderCommands(page, displayPage, warnings);
+      } catch (cause) {
+        throw new PdfRendererError(
+          `Error rendering page ${displayPage.pageNumber.toString()}`,
+          { cause },
+        );
       }
     }
 

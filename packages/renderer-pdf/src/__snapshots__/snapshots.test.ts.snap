@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PDF renderer snapshots > embedded PNG image 1`] = `
+{
+  "author": undefined,
+  "creator": "ReportForge",
+  "pageCount": 1,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 1000,
+  "subject": undefined,
+  "title": undefined,
+}
+`;
+
+exports[`PDF renderer snapshots > metadata fields 1`] = `
+{
+  "author": "Jane Doe",
+  "creator": "ReportForge Snapshot Suite",
+  "pageCount": 1,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 500,
+  "subject": "Snapshot metadata",
+  "title": "Metadata Report",
+}
+`;
+
+exports[`PDF renderer snapshots > multi-page document 1`] = `
+{
+  "author": undefined,
+  "creator": "ReportForge",
+  "pageCount": 3,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 1000,
+  "subject": undefined,
+  "title": "Multi Page",
+}
+`;
+
+exports[`PDF renderer snapshots > multiple fonts 1`] = `
+{
+  "author": undefined,
+  "creator": "ReportForge",
+  "pageCount": 1,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 1000,
+  "subject": undefined,
+  "title": undefined,
+}
+`;
+
+exports[`PDF renderer snapshots > shapes — rectangles and lines 1`] = `
+{
+  "author": undefined,
+  "creator": "ReportForge",
+  "pageCount": 1,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 1000,
+  "subject": undefined,
+  "title": undefined,
+}
+`;
+
+exports[`PDF renderer snapshots > single page with text 1`] = `
+{
+  "author": "Snapshot Tests",
+  "creator": "ReportForge",
+  "pageCount": 1,
+  "producer": "pdf-lib (https://github.com/Hopding/pdf-lib)",
+  "sizeBucket": 1000,
+  "subject": undefined,
+  "title": "Single Page",
+}
+`;

@@ -1,8 +1,8 @@
 # Renderer
 
-Renderers convert the laid-out document model into a specific output format. Each renderer implements `IRenderer` and handles all format-specific details internally.
+Renderers convert the **Display List** into a specific output format. Each renderer implements `IRenderer` and handles all format-specific details internally.
 
-Renderers live in dedicated packages (e.g., `@reportforge/renderer-pdf`). They depend on layout output, not on the Builder API or component tree.
+Renderers live in dedicated packages (e.g., `@reportforge/renderer-pdf`). They depend on the display list, not on the Builder API or component tree.
 
 ## Renderer Contract
 
@@ -10,127 +10,153 @@ Renderers live in dedicated packages (e.g., `@reportforge/renderer-pdf`). They d
 interface IRenderer {
   readonly name: string;
   readonly mimeTypes: readonly string[];
-  render(context: IRenderContext): Promise<Uint8Array>;
+  render(displayList: DisplayList, options?: RenderOptions): Promise<Uint8Array>;
 }
 ```
 
-### Fields
+## Pipeline Position
 
-| Field       | Description                                          |
-| ----------- | ---------------------------------------------------- |
-| `name`      | Unique renderer identifier (e.g., `'pdf'`, `'html'`) |
-| `mimeTypes` | Supported MIME types (e.g., `'application/pdf'`)     |
-| `render`    | Converts layout output to bytes                      |
+```
+LayoutEngine.layout() → LayoutOutput
+                              ↓
+DisplayListGenerator.generate() → DisplayList
+                              ↓
+PdfRenderer.render() → Uint8Array (PDF bytes)
+```
 
-## Render Context
+The PDF renderer consumes **display commands only** — it never sees report components or layout nodes.
+
+## PDF Renderer (`@reportforge/renderer-pdf`)
+
+**Status: Implemented**
+
+### Rendering Pipeline
+
+```
+PdfRenderer
+    ↓
+PageRenderer (per page)
+    ↓
+├── TextRenderer      → draw-text
+├── ShapeRenderer     → draw-rectangle, draw-line, draw-circle, draw-ellipse
+├── ImageRenderer     → draw-image
+├── FontManager       → font resolution and caching
+└── ImageManager      → PNG/JPEG embedding and caching
+```
+
+Each class has a single responsibility. `PdfRenderer` orchestrates document creation, metadata, and page iteration. `PageRenderer` dispatches commands to the specialised renderers.
+
+### Supported Commands
+
+| Command          | Status        | Notes                                      |
+| ---------------- | ------------- | ------------------------------------------ |
+| `draw-text`      | ✅ Full       | Font, size, weight, colour, alignment      |
+| `draw-rectangle` | ✅ Full       | Fill, border, rounded corners              |
+| `draw-line`      | ✅ Full       | Horizontal and vertical dividers           |
+| `draw-image`     | ✅ Full       | PNG, JPEG, data URIs, aspect-ratio fit     |
+| `draw-circle`    | ✅ Full       | Filled and stroked                         |
+| `draw-ellipse`   | ✅ Full       | Filled and stroked                         |
+| `draw-table`     | ⚠️ Placeholder | Out of scope for this milestone           |
+| `draw-qr-code`   | ⚠️ Placeholder | Out of scope for this milestone           |
+| `draw-barcode`   | ⚠️ Placeholder | Out of scope for this milestone           |
+| `draw-path`      | ❌ Skipped    | Warning emitted                            |
+| `draw-polygon`   | ❌ Skipped    | Warning emitted                            |
+
+### Coordinate System
+
+The display list uses a **top-left origin** (y increases downward). pdf-lib uses a **bottom-left origin** (y increases upward).
+
+Conversion utilities in `@reportforge/renderer-pdf`:
+
+| Function            | Purpose                                           |
+| ------------------- | ------------------------------------------------- |
+| `toPageY()`         | Flip a single point                               |
+| `rectOriginToPageY()` | Convert rectangle top-left to pdf-lib bottom-left |
+| `textBaselineY()`   | Convert text box top to baseline position         |
+
+### Font Handling
+
+Six standard fonts are preloaded per document:
+
+- Helvetica / Helvetica Bold
+- Times Roman / Times Roman Bold
+- Courier / Courier Bold
+
+Unknown font names fall back to Helvetica. Register aliases via:
 
 ```typescript
-interface IRenderContext {
-  readonly document: LayoutOutput;
-  readonly theme: ITheme;
-  readonly metadata: Readonly<Record<string, unknown>>;
-  readonly options?: Readonly<Record<string, unknown>>;
-}
+import { PdfRenderer } from '@reportforge/renderer-pdf';
+import { StandardFonts } from 'pdf-lib';
+
+const renderer = new PdfRenderer();
+renderer.registerFont({
+  name: 'Brand Sans',
+  standardFont: StandardFonts.Helvetica,
+  weight: 'bold',
+});
 ```
 
-| Field      | Description                                                   |
-| ---------- | ------------------------------------------------------------- |
-| `document` | Laid-out pages and positioned elements from the layout engine |
-| `theme`    | Resolved theme for format-specific value mapping              |
-| `metadata` | Report metadata (title, author, etc.)                         |
-| `options`  | Renderer-specific options (compression, quality, etc.)        |
+Custom TTF/OTF embedding via `registerFont({ bytes })` is reserved for a future release.
 
-## Responsibilities
+### Image Handling
 
-| Responsibility      | Description                                            |
-| ------------------- | ------------------------------------------------------ |
-| Format generation   | Produce valid output in the target format              |
-| Element drawing     | Render each `LayoutElement` at its computed position   |
-| Font embedding      | Embed or reference fonts appropriate for the format    |
-| Image encoding      | Embed images in the format-native representation       |
-| Metadata embedding  | Set document properties (title, author, creation date) |
-| Resource management | Manage memory and streams for large documents          |
+`ImageManager` supports:
 
-## Input and Output
+- PNG and JPEG file paths (relative to `basePath` or absolute)
+- Base64 data URIs (`data:image/png;base64,...`)
+- Aspect-ratio preservation with centred placement inside the bounding box
+- Graceful placeholder rendering for missing or unsupported images
 
-```
-Input:  IRenderContext { document, theme, metadata, options }
-Output: Uint8Array (or ReadableStream in future versions)
+```typescript
+await renderer.render(displayList, { basePath: '/path/to/assets' });
 ```
 
-The renderer receives positioned elements — it does not compute layout.
+### Page Backgrounds
 
-## Renderer Independence
+Set a full-page background colour via render options or display list metadata:
 
+```typescript
+await renderer.render(displayList, { pageBackground: '#fafafa' });
+// or metadata: { pageBackground: '#fafafa' }
 ```
-Builder API ──✕──> Renderer     (no direct connection)
-Component Tree ──✕──> Renderer  (no direct connection)
-Report Schema ──✕──> Renderer   (no direct connection — layout sits in between)
-Layout Output ──✓──> Renderer   (only valid input)
-```
+
+### Document Metadata
+
+Embedded automatically from render options or `displayList.metadata`:
+
+- Title, Author, Subject, Keywords, Creator
+- Creation Date and Modification Date (set at render time)
+
+### Error Handling
+
+- Fatal errors throw `PdfRendererError` with renderer name and optional `nodeId`
+- Non-fatal issues (missing images, unsupported commands, invalid colours) emit warnings via `renderWithDiagnostics()`
+- Invalid coordinates are skipped with a warning — the renderer does not crash
+
+### Performance
+
+- Font instances are loaded once per document and reused
+- Embedded images are cached by source path/URI
+- Object stream compression is enabled by default (`compress: true`)
+
+## Adding Future Render Commands
+
+1. Define the command interface in `@reportforge/display-list`
+2. Emit the command from `DisplayListGenerator.elementToCommands()`
+3. Add a handler in the appropriate renderer class (`TextRenderer`, `ShapeRenderer`, etc.)
+4. Register the case in `PageRenderer.renderCommand()`
+5. Add snapshot tests in `@reportforge/renderer-pdf`
+
+Renderers must never import `@reportforge/core` or traverse the component tree.
 
 ## Built-in and Future Renderers
 
-| Renderer | Package                      | Output                                                                    | Status  |
-| -------- | ---------------------------- | ------------------------------------------------------------------------- | ------- |
-| PDF      | `@reportforge/renderer-pdf`  | `application/pdf`                                                         | Planned |
-| HTML     | `@reportforge/renderer-html` | `text/html`                                                               | Future  |
-| DOCX     | `@reportforge/renderer-docx` | `application/vnd.openxmlformats-officedocument.wordprocessingml.document` | Future  |
-| PNG      | `@reportforge/renderer-png`  | `image/png`                                                               | Future  |
-| JPEG     | `@reportforge/renderer-jpeg` | `image/jpeg`                                                              | Future  |
-
-Each renderer is a separate package that implements `IRenderer`. New renderers are registered via the plugin system.
-
-## Renderer Registration
-
-```typescript
-const plugin: IPlugin = {
-  name: 'html-renderer',
-  register(registry) {
-    registry.registerRenderer({
-      name: 'html',
-      mimeTypes: ['text/html'],
-      render: async (context) => {
-        // HTML generation logic (future implementation)
-        return new Uint8Array();
-      },
-    });
-  },
-};
-```
-
-## Renderer-Specific Options
-
-Each renderer may accept options via `IRenderContext.options`:
-
-### PDF (planned)
-
-```typescript
-{
-  compress: true,
-  pdfVersion: '1.7',
-  embedFonts: true,
-}
-```
-
-### HTML (future)
-
-```typescript
-{
-  standalone: true,
-  includeStyles: true,
-}
-```
-
-### PNG / JPEG (future)
-
-```typescript
-{
-  dpi: 300,
-  quality: 90,
-  backgroundColor: '#ffffff',
-}
-```
+| Renderer | Package                      | Output            | Status      |
+| -------- | ---------------------------- | ----------------- | ----------- |
+| PDF      | `@reportforge/renderer-pdf`  | `application/pdf` | Implemented |
+| HTML     | `@reportforge/renderer-html` | `text/html`       | Future      |
+| DOCX     | `@reportforge/renderer-docx` | Word document     | Future      |
+| PNG      | `@reportforge/renderer-png`  | `image/png`       | Future      |
 
 ## What Renderers Must Never Do
 
@@ -141,30 +167,3 @@ Each renderer may accept options via `IRenderContext.options`:
 | Compute pagination or positions | Layout engine responsibility |
 | Validate the report schema      | Core responsibility          |
 | Import `@reportforge/core`      | Violates layer separation    |
-
-## Error Handling
-
-Renderers throw structured errors with context:
-
-```typescript
-interface RendererError {
-  readonly renderer: string;
-  readonly nodeId?: string;
-  readonly message: string;
-  readonly cause?: unknown;
-}
-```
-
-Common failure cases: missing fonts, unsupported image formats, element overflow beyond page bounds (layout bug), and resource exhaustion on large documents.
-
-## Relationship to Other Layers
-
-```
-ILayoutEngine.layout() → LayoutOutput
-                              ↓
-IRenderer.render(context) → Uint8Array
-                              ↓
-                         Output (file, buffer, stream)
-```
-
-Renderers depend on `@reportforge/shared` interfaces and layout output types only.

@@ -1,13 +1,10 @@
 /**
  * @reportforge/renderer-pdf
  *
- * **Minimal PDF renderer** for the ReportForge vertical slice.
+ * Production PDF renderer for ReportForge.
  *
- * This package validates the complete rendering pipeline:
- * Builder → Layout → Display List → PDF bytes.
- *
- * It is intentionally limited — only Title, Paragraph, and Divider components
- * are supported via `draw-text` and `draw-line` commands.
+ * Converts a renderer-independent `DisplayList` into PDF bytes via a dedicated
+ * rendering pipeline: PdfRenderer → PageRenderer → Text/Shape/Image renderers.
  *
  * ## Quick start (via Builder API)
  *
@@ -15,11 +12,12 @@
  * import { Report } from '@reportforge/core';
  *
  * const report = Report.create()
- *   .title('Hello ReportForge')
- *   .paragraph('This is our first PDF.')
+ *   .title('Monthly Sales')
+ *   .paragraph('Sales increased by 18% this month.')
+ *   .image({ src: './assets/logo.png' })
  *   .divider();
  *
- * await report.toPDF('hello.pdf');
+ * await report.toPDF('report.pdf');
  * ```
  *
  * ## Quick start (manual pipeline)
@@ -40,17 +38,30 @@
 export { PdfRenderer } from './renderer.js';
 export type { PdfRenderOptions, PdfRenderResult } from './renderer.js';
 
+// ─── Rendering pipeline ───────────────────────────────────────────────────────
+
+export { PageRenderer } from './page-renderer.js';
+export { TextRenderer } from './text-renderer.js';
+export { ShapeRenderer } from './shape-renderer.js';
+export { ImageRenderer } from './image-renderer.js';
+
 // ─── Document model ───────────────────────────────────────────────────────────
 
 export { PdfDocument } from './pdf-document.js';
 export type { PdfDocumentMetadata } from './pdf-document.js';
 export { PdfPage } from './pdf-page.js';
 
+// ─── Resource managers ──────────────────────────────────────────────────────────
+
+export { FontManager, resolveStandardFont } from './fonts.js';
+export type { CustomFontRegistration } from './fonts.js';
+export { ImageManager } from './images.js';
+export type { EmbeddedImage, ImagePlacement } from './images.js';
+
 // ─── Utilities (public) ───────────────────────────────────────────────────────
 
 export { isValidColor, parseColor, parseColorWithNames, NAMED_COLORS } from './colors.js';
 export { rectOriginToPageY, textBaselineY, toPageY } from './coordinates.js';
-export { resolveStandardFont, FontManager } from './fonts.js';
 
 // ─── Errors ───────────────────────────────────────────────────────────────────
 

@@ -34,12 +34,27 @@ export async function renderReportToPdfBytes(builder: ReportBuilder): Promise<Ui
 
     const renderer = new PdfRenderer();
     const schema = builder.toSchema();
+    const meta = schema.metadata as Record<string, unknown>;
 
-    return await renderer.render(displayList, {
-      title: schema.metadata.title,
-      author: schema.metadata.author,
+    const renderOptions: Parameters<typeof renderer.render>[1] = {
       creator: 'ReportForge',
-    });
+    };
+
+    if (schema.metadata.title !== undefined) renderOptions.title = schema.metadata.title;
+    if (schema.metadata.author !== undefined) renderOptions.author = schema.metadata.author;
+
+    const subject = meta['subject'];
+    if (typeof subject === 'string') renderOptions.subject = subject;
+
+    const keywords = meta['keywords'];
+    if (Array.isArray(keywords) && keywords.every((k) => typeof k === 'string')) {
+      renderOptions.keywords = keywords;
+    }
+
+    const pageBackground = meta['pageBackground'];
+    if (typeof pageBackground === 'string') renderOptions.pageBackground = pageBackground;
+
+    return await renderer.render(displayList, renderOptions);
   } catch (error) {
     if (error instanceof ValidationFailureError) {
       throw error;
