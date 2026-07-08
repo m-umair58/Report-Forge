@@ -1,3 +1,7 @@
 # Guides
 
-How-to guides and tutorials for ReportForge will be added in future milestones.
+- [CLI](./cli.md) — scaffold projects, render reports, validate configuration
+- [First PDF](./first-pdf.md) — minimal end-to-end pipeline
+- [Templates](./templates.md) — document templates API
+- [Renderers](./renderers.md) — PDF, HTML, and SVG output
+- [Plugins](./plugins.md) — extend ReportForge with plugins
