@@ -58,15 +58,49 @@ export function estimateNodeHeight(node: IReportNode, contentWidth: number, them
       // Thin horizontal rule — border width plus a small visual gap.
       return 2;
 
-    case 'section': {
-      // Section height = sum of children heights + inter-child spacing.
-      // Top padding from section.spacing creates visual breathing room.
+    case 'section':
+    case 'container':
+    case 'stack':
+    case 'row': {
       let total = spacing.section;
       for (const child of node.children) {
         total += estimateNodeHeight(child, contentWidth, theme) + spacing.component;
       }
-      // Subtract the trailing spacing added to the last child.
       return Math.max(total - spacing.component, spacing.section);
+    }
+
+    case 'heading':
+      return typography.fontSizeSubtitle * typography.lineHeight;
+
+    case 'caption':
+    case 'label':
+      return typography.fontSize * typography.lineHeight * 0.9;
+
+    case 'spacer': {
+      const size = node.props['size'];
+      return typeof size === 'number' && size >= 0 ? size : spacing.component;
+    }
+
+    case 'logo':
+      return typeof node.props['height'] === 'number' ? node.props['height'] : 80;
+
+    case 'icon': {
+      const size = node.props['size'];
+      return typeof size === 'number' && size > 0 ? size : 24;
+    }
+
+    case 'metric-card':
+    case 'kpi':
+      return 68;
+
+    case 'badge':
+    case 'status-pill':
+      return 28;
+
+    case 'info-box':
+    case 'alert-box': {
+      const message = typeof node.props['message'] === 'string' ? node.props['message'] : '';
+      return estimateParagraphHeight(message, contentWidth, typography.fontSize, typography.lineHeight) + 24;
     }
 
     case 'header':

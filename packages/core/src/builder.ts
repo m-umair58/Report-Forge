@@ -5,6 +5,8 @@ import type {
   ValidationResult,
 } from '@reportforge/shared';
 
+import type { ComponentDescriptor } from '@reportforge/components';
+import { COMPONENT_TYPES } from '@reportforge/components';
 import type {
   BarcodeProps,
   ChartProps,
@@ -13,10 +15,11 @@ import type {
   SummaryCardProps,
   TableProps,
 } from './components.js';
-import { COMPONENT_TYPES, createDefaultRegistry } from './components.js';
+import { createDefaultRegistry } from './components.js';
 import type { InternalNode } from './node.js';
 import { createNode } from './node.js';
 import type { ComponentRegistry } from './registry.js';
+import { applyDescriptor } from './apply-descriptor.js';
 import { deserialize, serialize } from './serializer.js';
 import { createIdGenerator } from './utils.js';
 import { createDefaultValidationFramework } from './validator.js';
@@ -204,6 +207,17 @@ export class SectionBuilder {
   }
 
   /**
+   * Adds a component from the official component library.
+   *
+   * @example
+   * section.add(Components.MetricCard({ label: 'Users', value: '12,400' }));
+   */
+  add(descriptor: ComponentDescriptor): this {
+    applyDescriptor(this.node, this.idGen, descriptor, this.registry, COMPONENT_TYPES.SECTION);
+    return this;
+  }
+
+  /**
    * Adds a nested Section with an optional label.
    *
    * @param labelOrCallback - A label string or the section callback.
@@ -338,6 +352,21 @@ export class ReportBuilder {
   /** Adds a Barcode to the report. */
   barcode(props: BarcodeProps): this {
     addNode(this.rootNode, this.idGen, COMPONENT_TYPES.BARCODE, props);
+    return this;
+  }
+
+  /**
+   * Adds a component from the official component library.
+   *
+   * @example
+   * report
+   *   .add(Components.Title({ text: 'Monthly Sales' }))
+   *   .add(Components.Paragraph({ text: 'Summary...' }))
+   *   .add(Components.Divider())
+   *   .add(Components.SummaryCard({ title: 'Revenue', value: '$1.2M' }));
+   */
+  add(descriptor: ComponentDescriptor): this {
+    applyDescriptor(this.rootNode, this.idGen, descriptor, this.registry, COMPONENT_TYPES.REPORT);
     return this;
   }
 

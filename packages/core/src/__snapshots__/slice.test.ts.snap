@@ -2,9 +2,9 @@
 
 exports[`vertical slice — PDF snapshot > matches expected PDF structure snapshot 1`] = `
 {
-  "byteLength": 1192,
   "header": "%PDF",
   "pageCount": 1,
+  "sizeBucket": 1100,
   "title": "Snapshot Test",
 }
 `;

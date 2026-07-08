@@ -218,10 +218,20 @@ function layoutSectionNode(node: IReportNode, state: LayoutState): LayoutNode {
  * Dispatches layout for a single schema node to the appropriate handler.
  */
 function layoutSchemaNode(node: IReportNode, state: LayoutState): LayoutNode {
-  if (node.type === 'section') {
+  if (isLayoutContainer(node.type)) {
     return layoutSectionNode(node, state);
   }
   return layoutLeafNode(node, state);
+}
+
+/** Container types that flow children vertically like sections. */
+function isLayoutContainer(type: string): boolean {
+  return (
+    type === 'section' ||
+    type === 'container' ||
+    type === 'stack' ||
+    type === 'row'
+  );
 }
 
 // ─── Header / footer placement ────────────────────────────────────────────────

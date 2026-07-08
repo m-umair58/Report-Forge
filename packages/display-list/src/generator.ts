@@ -189,6 +189,147 @@ function generateFooterCommand(element: LayoutElement, ctx: DisplayContext): Dra
 }
 
 /**
+ * Converts an icon element into a placeholder rectangle + label.
+ */
+function generateIconCommands(
+  element: LayoutElement,
+  ctx: DisplayContext,
+): [DrawRectangleCommand, DrawTextCommand] {
+  const background: DrawRectangleCommand = {
+    kind: 'draw-rectangle',
+    sourceNodeId: element.nodeId,
+    x: element.x,
+    y: element.y,
+    width: element.width,
+    height: element.height,
+    fillColor: '#f0f0f0',
+    borderColor: DEFAULT_BORDER_COLOR,
+    borderWidth: 0.5,
+    cornerRadius: 4,
+    opacity: ctx.defaultOpacity,
+  };
+
+  const label: DrawTextCommand = {
+    kind: 'draw-text',
+    sourceNodeId: element.nodeId,
+    text: propString(element.props, 'name', 'icon'),
+    font: ctx.defaultFont,
+    fontSize: Math.min(ctx.defaultFontSize, element.height * 0.4),
+    fontWeight: 'normal',
+    lineHeight: DEFAULT_LINE_HEIGHT,
+    color: '#666666',
+    x: element.x + 4,
+    y: element.y + element.height / 2 - ctx.defaultFontSize * 0.4,
+    width: element.width - 8,
+    height: element.height,
+    rotation: 0,
+    opacity: ctx.defaultOpacity,
+    textAlign: 'center',
+  };
+
+  return [background, label];
+}
+
+function generateMetricCardCommands(
+  element: LayoutElement,
+  ctx: DisplayContext,
+): [DrawRectangleCommand, DrawTextCommand, DrawTextCommand] {
+  const labelKey = element.type === 'kpi' ? 'name' : 'label';
+  const normalized: LayoutElement = {
+    ...element,
+    props: {
+      ...element.props,
+      label: propString(element.props, labelKey, ''),
+    },
+  };
+  return generateSummaryCardCommands(normalized, ctx);
+}
+
+function generateBadgeCommands(
+  element: LayoutElement,
+  ctx: DisplayContext,
+): [DrawRectangleCommand, DrawTextCommand] {
+  const background: DrawRectangleCommand = {
+    kind: 'draw-rectangle',
+    sourceNodeId: element.nodeId,
+    x: element.x,
+    y: element.y,
+    width: element.width,
+    height: element.height,
+    fillColor: '#eef2ff',
+    borderColor: '#c7d2fe',
+    borderWidth: 0.5,
+    cornerRadius: element.height / 2,
+    opacity: ctx.defaultOpacity,
+  };
+
+  const label: DrawTextCommand = {
+    kind: 'draw-text',
+    sourceNodeId: element.nodeId,
+    text: propString(element.props, 'text', ''),
+    font: ctx.defaultFont,
+    fontSize: ctx.defaultFontSize * 0.85,
+    fontWeight: 'bold',
+    lineHeight: DEFAULT_LINE_HEIGHT,
+    color: '#3730a3',
+    x: element.x + 8,
+    y: element.y + element.height / 2 - ctx.defaultFontSize * 0.4,
+    width: element.width - 16,
+    height: element.height,
+    rotation: 0,
+    opacity: ctx.defaultOpacity,
+    textAlign: 'center',
+  };
+
+  return [background, label];
+}
+
+function generateInfoBoxCommands(
+  element: LayoutElement,
+  ctx: DisplayContext,
+  fillColor: string,
+  borderColor: string,
+): [DrawRectangleCommand, DrawTextCommand] {
+  const background: DrawRectangleCommand = {
+    kind: 'draw-rectangle',
+    sourceNodeId: element.nodeId,
+    x: element.x,
+    y: element.y,
+    width: element.width,
+    height: element.height,
+    fillColor,
+    borderColor,
+    borderWidth: 0.5,
+    cornerRadius: 4,
+    opacity: ctx.defaultOpacity,
+  };
+
+  const title = propString(element.props, 'title', '');
+  const message = propString(element.props, 'message', '');
+  const text = title.length > 0 ? `${title}\n${message}` : message;
+
+  const label: DrawTextCommand = {
+    kind: 'draw-text',
+    sourceNodeId: element.nodeId,
+    text,
+    font: ctx.defaultFont,
+    fontSize: ctx.defaultFontSize,
+    fontWeight: 'normal',
+    lineHeight: DEFAULT_LINE_HEIGHT,
+    color: ctx.defaultColor,
+    x: element.x + 10,
+    y: element.y + 10,
+    width: element.width - 20,
+    height: element.height - 20,
+    rotation: 0,
+    opacity: ctx.defaultOpacity,
+    textAlign: 'left',
+  };
+
+  return [background, label];
+}
+
+/**
  * Converts a table element into a DrawTableCommand.
  * The renderer is responsible for decomposing this into individual row/cell draws.
  */
@@ -395,13 +536,26 @@ function elementToCommands(element: LayoutElement, ctx: DisplayContext): Display
     case 'subtitle':
       return [generateTextCommand(element, DEFAULT_FONT_SIZE_SUBTITLE, 'bold', ctx)];
 
+    case 'heading':
+      return [generateTextCommand(element, DEFAULT_FONT_SIZE_SUBTITLE, 'bold', ctx)];
+
     case 'paragraph':
       return [generateTextCommand(element, ctx.defaultFontSize, 'normal', ctx)];
+
+    case 'caption':
+    case 'label':
+      return [generateTextCommand(element, ctx.defaultFontSize * 0.85, 'normal', ctx)];
 
     case 'divider':
       return [generateDividerCommand(element, ctx)];
 
+    case 'spacer':
+      return [];
+
     case 'section':
+    case 'container':
+    case 'stack':
+    case 'row':
       return [generateSectionCommand(element, ctx)];
 
     case 'header':
@@ -416,11 +570,31 @@ function elementToCommands(element: LayoutElement, ctx: DisplayContext): Display
     case 'image':
       return [generateImageCommand(element, ctx)];
 
+    case 'logo':
+      return [generateImageCommand(element, ctx)];
+
+    case 'icon':
+      return [...generateIconCommands(element, ctx)];
+
     case 'chart':
       return [...generateChartCommands(element, ctx)];
 
     case 'summary-card':
       return [...generateSummaryCardCommands(element, ctx)];
+
+    case 'metric-card':
+    case 'kpi':
+      return [...generateMetricCardCommands(element, ctx)];
+
+    case 'badge':
+    case 'status-pill':
+      return [...generateBadgeCommands(element, ctx)];
+
+    case 'info-box':
+      return [...generateInfoBoxCommands(element, ctx, '#f0f7ff', '#336699')];
+
+    case 'alert-box':
+      return [...generateInfoBoxCommands(element, ctx, '#fff8e6', '#b8860b')];
 
     case 'qr-code':
       return [generateQRCodeCommand(element, ctx)];
