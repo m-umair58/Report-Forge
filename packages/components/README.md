@@ -67,9 +67,15 @@ await report.toPDF('report.pdf');
 | InfoBox     | `Components.InfoBox()`     |
 | AlertBox    | `Components.AlertBox()`    |
 
+### Tables
+
+| Component | Factory              | Notes                          |
+| --------- | -------------------- | ------------------------------ |
+| Table     | `Components.Table()` | Full pagination via table engine |
+
 ### Placeholders (future milestones)
 
-`Components.Table()` and `Components.Chart()` accept props but rendering is deferred.
+`Components.Chart()` accepts props but chart rendering is deferred.
 
 ## Common props
 

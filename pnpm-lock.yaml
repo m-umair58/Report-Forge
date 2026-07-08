@@ -102,6 +102,9 @@ importers:
       '@reportforge/shared':
         specifier: workspace:*
         version: link:../shared
+      '@reportforge/table':
+        specifier: workspace:*
+        version: link:../table
 
   packages/renderer-pdf:
     dependencies:
@@ -120,6 +123,15 @@ importers:
         version: 22.20.1
 
   packages/shared: {}
+
+  packages/table:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@reportforge/typography':
+        specifier: workspace:*
+        version: link:../typography
 
   packages/templates: {}
 

@@ -9,6 +9,7 @@ import { ImageRenderer } from './image-renderer.js';
 import type { ImageManager } from './images.js';
 import { ShapeRenderer } from './shape-renderer.js';
 import { TextRenderer } from './text-renderer.js';
+import { TableRenderer } from './table-renderer.js';
 
 const PLACEHOLDER_FILL = rgb(0.93, 0.93, 0.93);
 const PLACEHOLDER_BORDER = rgb(0.7, 0.7, 0.7);
@@ -21,6 +22,7 @@ export class PageRenderer {
   private readonly _textRenderer: TextRenderer;
   private readonly _shapeRenderer: ShapeRenderer;
   private readonly _imageRenderer: ImageRenderer;
+  private readonly _tableRenderer: TableRenderer;
   private readonly _fontManager: FontManager;
 
   constructor(fontManager: FontManager, imageManager: ImageManager) {
@@ -28,6 +30,7 @@ export class PageRenderer {
     this._textRenderer = new TextRenderer(fontManager);
     this._shapeRenderer = new ShapeRenderer();
     this._imageRenderer = new ImageRenderer(imageManager, fontManager);
+    this._tableRenderer = new TableRenderer(fontManager);
   }
 
   /** Draws a full-page background colour before any commands are rendered. */
@@ -90,7 +93,7 @@ export class PageRenderer {
         break;
 
       case 'draw-table':
-        this.renderTablePlaceholder(page, command, pageHeight, warnings);
+        this._tableRenderer.render(page, command, pageHeight, warnings);
         break;
 
       case 'draw-qr-code':
@@ -128,49 +131,6 @@ export class PageRenderer {
           `[${unknown.kind}] Unsupported command — skipping node '${unknown.sourceNodeId}'`,
         );
       }
-    }
-  }
-
-  private renderTablePlaceholder(
-    page: PDFPage,
-    command: Extract<DisplayCommand, { kind: 'draw-table' }>,
-    pageHeight: number,
-    warnings: string[],
-  ): void {
-    warnings.push(
-      `[draw-table] Full table rendering is not yet implemented — ` +
-        `drawing placeholder for node '${command.sourceNodeId}'`,
-    );
-
-    const pdfY = rectOriginToPageY(command.y, command.height, pageHeight);
-    page.drawRectangle({
-      x: command.x,
-      y: pdfY,
-      width: command.width,
-      height: command.height,
-      color: PLACEHOLDER_FILL,
-      borderColor: PLACEHOLDER_BORDER,
-      borderWidth: 0.5,
-      opacity: command.opacity,
-    });
-
-    if (command.width > 20 && command.height > 10) {
-      const font = this._fontManager.resolve('Helvetica', 'normal');
-      const fontSize = Math.min(9, command.height * 0.35);
-      const label =
-        command.columns.length > 0
-          ? `Table (${command.columns.length.toString()} cols × ${command.rows.length.toString()} rows)`
-          : 'Table (placeholder)';
-
-      page.drawText(label, {
-        x: command.x + 4,
-        y: pdfY + command.height / 2 - fontSize * 0.5,
-        size: fontSize,
-        font,
-        color: PLACEHOLDER_TEXT,
-        maxWidth: command.width - 8,
-        opacity: command.opacity,
-      });
     }
   }
 

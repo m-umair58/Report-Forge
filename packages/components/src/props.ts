@@ -122,18 +122,44 @@ export interface AlertBoxProps extends BaseComponentProps {
   readonly severity?: 'info' | 'success' | 'warning' | 'error';
 }
 
-// ─── Placeholders (future milestones) ─────────────────────────────────────────
+// ─── Tables ─────────────────────────────────────────────────────────────────────
 
-export interface TableColumn {
+export type ColumnWidth = number | 'auto' | `${number}%`;
+
+export interface ColumnDefinition {
   readonly key: string;
-  readonly label: string;
+  /** Display title (alias: `label`). */
+  readonly title?: string;
+  readonly label?: string;
   readonly align?: 'left' | 'center' | 'right';
+  readonly width?: ColumnWidth;
+  readonly minWidth?: number;
+  readonly maxWidth?: number;
 }
 
-/** Placeholder table props — full table rendering is a future milestone. */
+/** @deprecated Use `ColumnDefinition`. */
+export type TableColumn = ColumnDefinition;
+
+export interface TableStyle {
+  readonly border?: { readonly width?: number; readonly color?: string };
+  readonly headerBackground?: string;
+  readonly headerColor?: string;
+  readonly headerFontWeight?: 'normal' | 'bold';
+  readonly footerBackground?: string;
+  readonly alternateRowBackground?: string;
+  readonly cellPadding?: number | { readonly top: number; readonly right: number; readonly bottom: number; readonly left: number };
+  readonly fontSize?: number;
+  readonly fontFamily?: string;
+  readonly lineHeight?: number;
+}
+
 export interface TableProps extends BaseComponentProps {
-  readonly columns: readonly TableColumn[];
+  readonly columns: readonly ColumnDefinition[];
   readonly rows: readonly Readonly<Record<string, unknown>>[];
+  readonly headerRows?: readonly Readonly<Record<string, unknown>>[];
+  readonly footerRows?: readonly Readonly<Record<string, unknown>>[];
+  readonly repeatHeader?: boolean;
+  readonly tableStyle?: TableStyle;
 }
 
 export interface ChartDataset {

@@ -8,11 +8,12 @@
   "scripts": {
     "hello-world": "tsx hello-world.ts",
     "simple-report": "tsx simple-report.ts",
-    "sales-report": "tsx sales-report.ts",
-    "invoice": "tsx invoice.ts",
-    "image-demo": "tsx image-demo.ts"
+    "sales-table": "tsx sales-table.ts",
+    "inventory-table": "tsx inventory-table.ts",
+    "financial-report": "tsx financial-report.ts"
   },
   "dependencies": {
+    "@reportforge/components": "workspace:*",
     "@reportforge/core": "workspace:*"
   },
   "devDependencies": {

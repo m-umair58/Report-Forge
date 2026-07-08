@@ -92,14 +92,47 @@ function validatePropValues(descriptor: ComponentDescriptor, path: string): Comp
       break;
     }
 
-    case 'table':
-      if (!Array.isArray(props['columns']) || props['columns'].length === 0) {
+    case 'table': {
+      const columns = props['columns'];
+      if (!Array.isArray(columns) || columns.length === 0) {
         errors.push(issue(`'table' requires at least one column.`, path));
+      } else {
+        const seenKeys = new Set<string>();
+        for (let i = 0; i < columns.length; i++) {
+          const column = columns[i] as Record<string, unknown> | undefined;
+          if (column === undefined) continue;
+          const key = column['key'];
+          if (typeof key !== 'string' || key.trim().length === 0) {
+            errors.push(issue(`Column key must be non-empty.`, `${path}.columns[${i.toString()}].key`));
+          } else if (seenKeys.has(key)) {
+            errors.push(issue(`Duplicate column key '${key}'.`, `${path}.columns[${i.toString()}].key`));
+          } else {
+            seenKeys.add(key);
+          }
+
+          const title = column['title'] ?? column['label'];
+          if (typeof title !== 'string' || title.trim().length === 0) {
+            errors.push(issue(`Column header must be non-empty.`, `${path}.columns[${i.toString()}].title`));
+          }
+
+          const width = column['width'];
+          if (typeof width === 'number' && width < 0) {
+            errors.push(issue(`Column width must be non-negative.`, `${path}.columns[${i.toString()}].width`));
+          }
+        }
       }
+
       if (!Array.isArray(props['rows'])) {
         errors.push(issue(`'table' requires a 'rows' array.`, path));
       }
+
+      const tableStyle = props['tableStyle'] as Record<string, unknown> | undefined;
+      const padding = tableStyle?.['cellPadding'];
+      if (typeof padding === 'number' && padding < 0) {
+        errors.push(issue(`'table.tableStyle.cellPadding' must be non-negative.`, path));
+      }
       break;
+    }
 
     case 'chart':
       if (!isNonEmptyString(props['type'])) {

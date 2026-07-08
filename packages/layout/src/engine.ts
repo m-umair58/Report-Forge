@@ -12,6 +12,7 @@ import { ZERO_BOX_MODEL } from './box.js';
 import { DEFAULT_LAYOUT_THEME } from './default-theme.js';
 import { estimateNodeHeight } from './estimators.js';
 import { LayoutError } from './errors.js';
+import { layoutTableNode } from './table-layout.js';
 import { createPageModel } from './page.js';
 import type { PageModel } from './page.js';
 import type { LayoutNode, LayoutResult } from './types.js';
@@ -141,6 +142,27 @@ function absoluteY(state: LayoutState): number {
  * allowed to overflow — the caller is expected to validate this separately.
  */
 function layoutLeafNode(node: IReportNode, state: LayoutState): LayoutNode {
+  if (node.type === 'table') {
+    const fragments = layoutTableNode(node, state);
+    const last = fragments[fragments.length - 1];
+    if (last === undefined) {
+      return {
+        id: node.id,
+        type: node.type,
+        pageNumber: state.cursor.pageNumber,
+        x: state.pageModel.marginLeft,
+        y: absoluteY(state),
+        width: state.pageModel.contentWidth,
+        height: 0,
+        box: ZERO_BOX_MODEL,
+        props: node.props,
+        style: node.style ?? {},
+        children: [],
+      };
+    }
+    return last;
+  }
+
   const { pageModel, cursor, interElementSpacing, theme } = state;
 
   const height = estimateNodeHeight(node, pageModel.contentWidth, theme);
