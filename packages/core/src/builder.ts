@@ -23,6 +23,7 @@ import { applyDescriptor } from './apply-descriptor.js';
 import { deserialize, serialize } from './serializer.js';
 import { createIdGenerator } from './utils.js';
 import { createDefaultValidationFramework } from './validator.js';
+import type { ReportPluginRuntime } from './plugin-runtime.js';
 
 // ─── Shared builder helper ───────────────────────────────────────────────────
 
@@ -255,6 +256,8 @@ export interface ReportCreateOptions {
   readonly metadata?: ReportMetadata;
   /** Global theme (object or registered theme name). */
   readonly theme?: import('@reportforge/theme').ThemeInput;
+  /** Optional plugin runtime for validators, hooks, and theme overrides. */
+  readonly pluginRuntime?: ReportPluginRuntime;
 }
 
 /**
@@ -282,6 +285,7 @@ export class ReportBuilder {
   private readonly registry: ComponentRegistry;
   private readonly metadata: ReportMetadata;
   private readonly theme?: import('@reportforge/theme').ThemeInput;
+  private readonly pluginRuntime?: ReportPluginRuntime;
 
   /** @internal — use `Report.create()` or `Report.fromJSON()` */
   constructor(
@@ -290,6 +294,7 @@ export class ReportBuilder {
     registry: ComponentRegistry,
     idGen: (type: string) => string,
     theme?: import('@reportforge/theme').ThemeInput,
+    pluginRuntime?: ReportPluginRuntime,
   ) {
     this.rootNode = rootNode;
     this.metadata = metadata;
@@ -298,6 +303,19 @@ export class ReportBuilder {
     if (theme !== undefined) {
       this.theme = theme;
     }
+    if (pluginRuntime !== undefined) {
+      this.pluginRuntime = pluginRuntime;
+    }
+  }
+
+  /** Returns the component registry used by this report instance. */
+  getComponentRegistry(): ComponentRegistry {
+    return this.registry;
+  }
+
+  /** Returns the plugin runtime attached to this report, if any. */
+  getPluginRuntime(): ReportPluginRuntime | undefined {
+    return this.pluginRuntime;
   }
 
   /** Returns the configured theme input, if any. */
@@ -473,6 +491,9 @@ export class ReportBuilder {
   validate(): ValidationResult {
     const schema = this.toSchema();
     const framework = createDefaultValidationFramework();
+    for (const validator of this.pluginRuntime?.validators ?? []) {
+      framework.addValidator(validator);
+    }
     return framework.validate(schema, this.registry);
   }
 
@@ -539,7 +560,35 @@ export function createReportBuilder(options?: ReportCreateOptions): ReportBuilde
   const registry = createDefaultRegistry();
   const metadata: ReportMetadata = options?.metadata ?? {};
   const rootNode = createNode(idGen(COMPONENT_TYPES.REPORT), COMPONENT_TYPES.REPORT, {}, null);
-  return new ReportBuilder(rootNode, metadata, registry, idGen, options?.theme);
+  return new ReportBuilder(
+    rootNode,
+    metadata,
+    registry,
+    idGen,
+    options?.theme,
+    options?.pluginRuntime,
+  );
+}
+
+/**
+ * Creates a report builder with a custom component registry.
+ * Used by the plugin loader to merge plugin-registered component types.
+ */
+export function createReportBuilderWithRegistry(
+  registry: ComponentRegistry,
+  options?: ReportCreateOptions,
+): ReportBuilder {
+  const idGen = createIdGenerator();
+  const metadata: ReportMetadata = options?.metadata ?? {};
+  const rootNode = createNode(idGen(COMPONENT_TYPES.REPORT), COMPONENT_TYPES.REPORT, {}, null);
+  return new ReportBuilder(
+    rootNode,
+    metadata,
+    registry,
+    idGen,
+    options?.theme,
+    options?.pluginRuntime,
+  );
 }
 
 /**

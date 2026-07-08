@@ -1,0 +1,40 @@
+{
+  "name": "@reportforge/plugin-loader",
+  "version": "0.0.0",
+  "description": "Plugin loader and application runtime for ReportForge",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@reportforge/components": "workspace:*",
+    "@reportforge/core": "workspace:*",
+    "@reportforge/plugin-sdk": "workspace:*",
+    "@reportforge/shared": "workspace:*",
+    "@reportforge/theme": "workspace:*",
+    "@reportforge/themes": "workspace:*"
+  },
+  "devDependencies": {
+    "@reportforge/example-plugin-chart": "workspace:*",
+    "@reportforge/example-plugin-component": "workspace:*",
+    "@reportforge/example-plugin-template": "workspace:*",
+    "@reportforge/example-plugin-theme": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

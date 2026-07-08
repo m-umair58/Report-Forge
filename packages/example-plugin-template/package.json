@@ -1,0 +1,29 @@
+{
+  "name": "@reportforge/example-plugin-template",
+  "version": "1.0.0",
+  "description": "Example ReportForge plugin that registers a custom template",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@reportforge/plugin-sdk": "workspace:*",
+    "@reportforge/shared": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

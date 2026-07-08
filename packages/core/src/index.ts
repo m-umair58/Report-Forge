@@ -24,8 +24,9 @@
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 export { Report } from './report.js';
-export { ReportBuilder, SectionBuilder, HeaderBuilder, FooterBuilder } from './builder.js';
+export { ReportBuilder, SectionBuilder, HeaderBuilder, FooterBuilder, createReportBuilderWithRegistry } from './builder.js';
 export type { ReportCreateOptions } from './builder.js';
+export type { ReportPluginRuntime } from './plugin-runtime.js';
 
 // ─── Component types and props ───────────────────────────────────────────────
 
