@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/renderer-pdf",
+  "name": "@reportforge/typography",
   "version": "0.0.0",
-  "description": "PDF renderer for ReportForge",
+  "description": "Renderer-independent typography and text measurement for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,9 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@reportforge/display-list": "workspace:*",
-    "@reportforge/shared": "workspace:*",
-    "pdf-lib": "1.17.1"
+    "@reportforge/shared": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

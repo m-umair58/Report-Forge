@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`vertical slice — PDF snapshot > matches expected PDF structure snapshot 1`] = `
+{
+  "byteLength": 1192,
+  "header": "%PDF",
+  "pageCount": 1,
+  "title": "Snapshot Test",
+}
+`;

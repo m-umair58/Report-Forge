@@ -83,6 +83,7 @@ export {
   SerializationError,
   DeserializationError,
   ValidationFailureError,
+  RenderError,
 } from './errors.js';
 
 // ─── Package identity ────────────────────────────────────────────────────────

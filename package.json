@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "example": "pnpm --filter @reportforge/examples run"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.2",

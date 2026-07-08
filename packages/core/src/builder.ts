@@ -1,4 +1,9 @@
-import type { ReportMetadata, ReportSchema, ValidationResult } from '@reportforge/shared';
+import type {
+  ReportMetadata,
+  ReportSchema,
+  RenderOptions,
+  ValidationResult,
+} from '@reportforge/shared';
 
 import type {
   BarcodeProps,
@@ -431,15 +436,38 @@ export class ReportBuilder {
   }
 
   /**
-   * Placeholder for the render pipeline.
-   * Implemented in a future milestone once layout and renderer packages are wired.
+   * Renders the report to a PDF file.
+   *
+   * Runs the complete pipeline:
+   * Builder → Validation → Layout Engine → Display List → PDF Renderer → file
+   *
+   * @param outputPath - Destination file path (e.g. `'hello.pdf'`).
+   *
+   * @example
+   * const report = Report.create()
+   *   .title('Hello ReportForge')
+   *   .paragraph('This is our first PDF.')
+   *   .divider();
+   *
+   * await report.toPDF('hello.pdf');
    */
-  render(): Promise<never> {
-    return Promise.reject(
-      new Error(
-        'render() is not yet implemented. Requires layout engine and renderer (future milestone).',
-      ),
-    );
+  async toPDF(outputPath: string): Promise<void> {
+    const { renderReportToPdf } = await import('./render-pdf.js');
+    await renderReportToPdf(this, outputPath);
+  }
+
+  /**
+   * Renders the report and returns PDF bytes.
+   *
+   * @param options - Render options. Only `format: 'pdf'` is supported.
+   *                  Pass `output` to also write the file.
+   *
+   * @example
+   * const bytes = await report.render({ format: 'pdf' });
+   */
+  async render(options: RenderOptions): Promise<Uint8Array> {
+    const { renderReport } = await import('./render-pdf.js');
+    return renderReport(this, options);
   }
 }
 

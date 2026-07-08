@@ -23,7 +23,13 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@reportforge/display-list": "workspace:*",
+    "@reportforge/layout": "workspace:*",
+    "@reportforge/renderer-pdf": "workspace:*",
     "@reportforge/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "pdf-lib": "1.17.1"
   },
   "publishConfig": {
     "access": "public"

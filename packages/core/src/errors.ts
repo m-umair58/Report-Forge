@@ -65,3 +65,14 @@ export class ValidationFailureError extends ReportForgeError {
     this.name = 'ValidationFailureError';
   }
 }
+
+/**
+ * Thrown when the render pipeline fails after validation.
+ * Covers layout, display-list generation, PDF rendering, and file I/O.
+ */
+export class RenderError extends ReportForgeError {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, 'render', options);
+    this.name = 'RenderError';
+  }
+}
