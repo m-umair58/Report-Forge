@@ -104,9 +104,18 @@ importers:
       '@reportforge/layout':
         specifier: workspace:*
         version: link:../layout
+      '@reportforge/render':
+        specifier: workspace:*
+        version: link:../render
+      '@reportforge/renderer-html':
+        specifier: workspace:*
+        version: link:../renderer-html
       '@reportforge/renderer-pdf':
         specifier: workspace:*
         version: link:../renderer-pdf
+      '@reportforge/renderer-svg':
+        specifier: workspace:*
+        version: link:../renderer-svg
       '@reportforge/shared':
         specifier: workspace:*
         version: link:../shared
@@ -218,6 +227,31 @@ importers:
         specifier: workspace:*
         version: link:../shared
 
+  packages/render:
+    dependencies:
+      '@reportforge/display-list':
+        specifier: workspace:*
+        version: link:../display-list
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^22.15.0
+        version: 22.20.1
+
+  packages/renderer-html:
+    dependencies:
+      '@reportforge/display-list':
+        specifier: workspace:*
+        version: link:../display-list
+      '@reportforge/render':
+        specifier: workspace:*
+        version: link:../render
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
   packages/renderer-pdf:
     dependencies:
       '@reportforge/display-list':
@@ -233,6 +267,18 @@ importers:
       '@types/node':
         specifier: ^22.15.0
         version: 22.20.1
+
+  packages/renderer-svg:
+    dependencies:
+      '@reportforge/display-list':
+        specifier: workspace:*
+        version: link:../display-list
+      '@reportforge/render':
+        specifier: workspace:*
+        version: link:../render
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
 
   packages/shared: {}
 
