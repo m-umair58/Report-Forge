@@ -1,48 +1,46 @@
 /**
  * financial-report.ts
  *
- * Financial summary table with footer row and styled header.
+ * Financial summary report using the Templates API.
  *
- * Run: pnpm example financial-report
+ * Run:
+ *   pnpm example financial-report
+ *
+ * Output:
+ *   examples/financial-report.pdf
  */
 
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { Components } from '@reportforge/components';
-import { Report } from '@reportforge/core';
+import { Templates } from '@reportforge/templates';
+import { FinancialTheme } from '@reportforge/themes';
 
 const outputPath = join(fileURLToPath(import.meta.url), '..', 'financial-report.pdf');
 
-const employees = [
-  { name: 'Alice Chen', department: 'Engineering', salary: '$142,000' },
-  { name: 'Bob Martinez', department: 'Sales', salary: '$118,500' },
-  { name: 'Carol Nguyen', department: 'Marketing', salary: '$105,200' },
-  { name: 'David Kim', department: 'Engineering', salary: '$156,800' },
-  { name: 'Eva Patel', department: 'Operations', salary: '$97,400' },
-];
-
-const report = Report.create({
-  metadata: { title: 'Financial Report', author: 'ReportForge' },
-})
-  .title('Employee Compensation Summary')
-  .add(
-    Components.Table({
-      columns: [
-        { key: 'name', title: 'Employee' },
-        { key: 'department', title: 'Department' },
-        { key: 'salary', title: 'Salary', align: 'right' },
-      ],
-      rows: employees,
-      footerRows: [{ name: 'Total (5)', department: '—', salary: '$619,900' }],
-      tableStyle: {
-        headerFontWeight: 'bold',
-        headerBackground: '#1a1a2e',
-        headerColor: '#ffffff',
-        footerBackground: '#eef2ff',
-      },
-    }),
-  );
+const report = Templates.FinancialReport.create(
+  {
+    period: 'FY 2026 H1',
+    summary: 'Operating margin improved to 18.4% while maintaining steady cash flow.',
+    rows: [
+      { category: 'Revenue', amount: '$8.4M' },
+      { category: 'COGS', amount: '$3.1M' },
+      { category: 'Operating Expenses', amount: '$2.8M' },
+      { category: 'Net Income', amount: '$1.54M' },
+    ],
+    totals: [
+      { label: 'EBITDA', value: '$2.1M' },
+      { label: 'Free Cash Flow', value: '$1.2M' },
+    ],
+    branding: {
+      companyName: 'Acme Financial Services',
+      address: '500 Market Street · San Francisco, CA',
+      footerText: 'Confidential — Internal use only',
+    },
+  },
+  { theme: FinancialTheme },
+);
 
 await report.toPDF(outputPath);
+
 console.log(`✔ PDF written to: ${outputPath}`);

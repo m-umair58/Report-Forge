@@ -10,7 +10,11 @@
     "simple-report": "tsx simple-report.ts",
     "sales-table": "tsx sales-table.ts",
     "inventory-table": "tsx inventory-table.ts",
+    "invoice": "tsx invoice.ts",
+    "quotation": "tsx quotation.ts",
     "financial-report": "tsx financial-report.ts",
+    "certificate": "tsx certificate.ts",
+    "payslip": "tsx payslip.ts",
     "financial-report-charts": "tsx financial-report-charts.ts",
     "sales-dashboard": "tsx sales-dashboard.ts",
     "healthcare-dashboard": "tsx healthcare-dashboard.ts",
@@ -24,6 +28,7 @@
     "@reportforge/charts": "workspace:*",
     "@reportforge/components": "workspace:*",
     "@reportforge/core": "workspace:*",
+    "@reportforge/templates": "workspace:*",
     "@reportforge/themes": "workspace:*"
   },
   "devDependencies": {

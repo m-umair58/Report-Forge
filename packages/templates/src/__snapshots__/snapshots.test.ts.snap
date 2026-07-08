@@ -1,0 +1,2113 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`template layout snapshots > Certificate 1`] = `
+{
+  "metadata": {
+    "title": "Certificate — Alex Rivera",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Certificate of Achievement",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "This certifies that",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "title-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Alex Rivera",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "text": "has successfully completed Advanced Web Development.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "text": "Awarded on June 30, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "text": "Authorized Signature:",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0009",
+            "layoutHints": {},
+            "props": {
+              "text": "________________________________________",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "text": "Dr. Sarah Chen, Dean",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000b",
+            "layoutHints": {},
+            "props": {
+              "text": "Date: June 30, 2026",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0007",
+        "layoutHints": {},
+        "props": {
+          "label": "Signature",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > CompanyProfile 1`] = `
+{
+  "metadata": {
+    "title": "Company Profile",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Acme Corp — Company Profile",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Acme Corp builds document automation tools for modern businesses.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "subtitle-snapshot-0005",
+            "layoutHints": {},
+            "props": {
+              "text": "Company Information",
+            },
+            "style": {},
+            "type": "subtitle",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "text": "Acme Corp",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "text": "123 Business Street, San Francisco, CA",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "text": "Email: hello@acme.example",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0009",
+            "layoutHints": {},
+            "props": {
+              "text": "Phone: +1 555 0100",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "text": "Founded: 2018",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000b",
+            "layoutHints": {},
+            "props": {
+              "text": "Employees: 250+",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000c",
+            "layoutHints": {},
+            "props": {
+              "text": "Headquarters: San Francisco, CA",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "label": "Overview",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "subtitle-snapshot-000e",
+            "layoutHints": {},
+            "props": {
+              "text": "Contact",
+            },
+            "style": {},
+            "type": "subtitle",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000f",
+            "layoutHints": {},
+            "props": {
+              "text": "hello@acme.example",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000g",
+            "layoutHints": {},
+            "props": {
+              "text": "+1 555 0100",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000h",
+            "layoutHints": {},
+            "props": {
+              "text": "https://acme.example",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-000d",
+        "layoutHints": {},
+        "props": {
+          "label": "Contact",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > EmployeeSummary 1`] = `
+{
+  "metadata": {
+    "title": "Employee Summary — Sam Taylor",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Employee Summary",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Sam Taylor · Senior Software Engineer",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Department: Engineering · ID: EMP-2044",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "text": "Start Date: March 2022",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "text": "Leads platform reliability initiatives and mentors junior engineers.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "label": "Overview",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0009",
+            "layoutHints": {},
+            "props": {
+              "label": "Projects Delivered",
+              "value": "6",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "label": "Team Satisfaction",
+              "value": "4.8/5",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0008",
+        "layoutHints": {},
+        "props": {
+          "label": "Key Metrics",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > FinancialReport 1`] = `
+{
+  "metadata": {
+    "title": "Financial Report — FY 2026 H1",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Financial Report — FY 2026 H1",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Operating margin improved to 18.4% while maintaining steady cash flow.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0005",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "category",
+                  "title": "Category",
+                },
+                {
+                  "align": "right",
+                  "key": "amount",
+                  "title": "Amount",
+                },
+              ],
+              "rows": [
+                {
+                  "amount": "$8.4M",
+                  "category": "Revenue",
+                },
+                {
+                  "amount": "$3.1M",
+                  "category": "COGS",
+                },
+                {
+                  "amount": "$2.8M",
+                  "category": "Operating Expenses",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "label": "Revenue",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "label": "Net Income",
+              "value": "$1.54M",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "label": "EBITDA",
+              "value": "$2.1M",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "label": "Totals",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > InventoryReport 1`] = `
+{
+  "metadata": {
+    "title": "Inventory Report — July 1, 2026",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Inventory Report",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "As of July 1, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0005",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "sku",
+                  "title": "SKU",
+                },
+                {
+                  "key": "name",
+                  "title": "Product",
+                },
+                {
+                  "align": "right",
+                  "key": "quantity",
+                  "title": "Qty",
+                },
+                {
+                  "key": "location",
+                  "title": "Location",
+                },
+              ],
+              "rows": [
+                {
+                  "location": "Warehouse A",
+                  "name": "Widget A",
+                  "quantity": 420,
+                  "sku": "SKU-001",
+                },
+                {
+                  "location": "Warehouse B",
+                  "name": "Widget B",
+                  "quantity": 88,
+                  "sku": "SKU-002",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "label": "Stock Levels",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Invoice 1`] = `
+{
+  "metadata": {
+    "subject": "Invoice",
+    "title": "Invoice INV-2026-0042",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Invoice INV-2026-0042",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Bill To: Northwind Traders · accounts@northwind.example",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Invoice Date: July 1, 2026 · Due: July 31, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "divider-snapshot-0005",
+        "layoutHints": {},
+        "props": {},
+        "style": {},
+        "type": "divider",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "description",
+                  "title": "Description",
+                },
+                {
+                  "align": "right",
+                  "key": "quantity",
+                  "title": "Qty",
+                },
+                {
+                  "align": "right",
+                  "key": "unitPrice",
+                  "title": "Unit Price",
+                },
+                {
+                  "align": "right",
+                  "key": "total",
+                  "title": "Total",
+                },
+              ],
+              "rows": [
+                {
+                  "description": "Consulting — Q2 migration",
+                  "quantity": 40,
+                  "total": 6000,
+                  "unitPrice": 150,
+                },
+                {
+                  "description": "Platform support",
+                  "quantity": 1,
+                  "total": 6400,
+                  "unitPrice": 6400,
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "label": "Subtotal",
+              "value": "USD 12400.00",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0009",
+            "layoutHints": {},
+            "props": {
+              "label": "Tax",
+              "value": "USD 1054.00",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "label": "Total Due",
+              "value": "USD 13454.00",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "label": "Line Items",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000c",
+            "layoutHints": {},
+            "props": {
+              "text": "• Payment due within 30 days.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000d",
+            "layoutHints": {},
+            "props": {
+              "text": "• Late payments subject to 1.5% monthly interest.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-000b",
+        "layoutHints": {},
+        "props": {
+          "label": "Terms & Conditions",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > LabResult 1`] = `
+{
+  "metadata": {
+    "title": "Lab Results — Jordan Lee",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Laboratory Results",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Patient: Jordan Lee",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Test Date: July 3, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "test",
+                  "title": "Test",
+                },
+                {
+                  "key": "result",
+                  "title": "Result",
+                },
+                {
+                  "key": "reference",
+                  "title": "Reference Range",
+                },
+                {
+                  "key": "flag",
+                  "title": "Flag",
+                },
+              ],
+              "rows": [
+                {
+                  "reference": "70–99 mg/dL",
+                  "result": "92 mg/dL",
+                  "test": "Glucose",
+                },
+                {
+                  "flag": "Normal",
+                  "reference": "<200 mg/dL",
+                  "result": "185 mg/dL",
+                  "test": "Cholesterol",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Results",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Letter 1`] = `
+{
+  "metadata": {
+    "title": "Partnership Proposal",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "July 8, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Ms. Dana Brooks
+Director of Operations
+Contoso Ltd.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "title-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Partnership Proposal",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "text": "Thank you for the productive meeting last week.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "text": "We would like to propose a strategic partnership to expand our shared market reach.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0007",
+        "layoutHints": {},
+        "props": {
+          "text": "Sincerely,",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0008",
+        "layoutHints": {},
+        "props": {
+          "text": "Jordan Kim, VP Sales",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > PatientReport 1`] = `
+{
+  "metadata": {
+    "title": "Patient Report — Jordan Lee",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Patient Report",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Patient: Jordan Lee · ID: PAT-7782",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Date: July 3, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "text": "Seasonal allergic rhinitis",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Diagnosis",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "text": "Patient responding well to prescribed antihistamine regimen.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0007",
+        "layoutHints": {},
+        "props": {
+          "label": "Clinical Notes",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "name",
+                  "title": "Vital",
+                },
+                {
+                  "key": "value",
+                  "title": "Value",
+                },
+              ],
+              "rows": [
+                {
+                  "name": "Blood Pressure",
+                  "value": "118/76 mmHg",
+                },
+                {
+                  "name": "Heart Rate",
+                  "value": "72 bpm",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0009",
+        "layoutHints": {},
+        "props": {
+          "label": "Vitals",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Payslip 1`] = `
+{
+  "metadata": {
+    "title": "Payslip — Sam Taylor",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Payslip",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Employee: Sam Taylor (EMP-2044)",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Pay Period: June 1–30, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "label": "Gross Pay",
+              "value": "USD 8500.00",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Earnings",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "name",
+                  "title": "Deduction",
+                },
+                {
+                  "align": "right",
+                  "key": "amount",
+                  "title": "Amount",
+                },
+              ],
+              "rows": [
+                {
+                  "amount": 1200,
+                  "name": "Federal Tax",
+                },
+                {
+                  "amount": 320,
+                  "name": "Health Insurance",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0007",
+        "layoutHints": {},
+        "props": {
+          "label": "Deductions",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [],
+        "id": "summary-card-snapshot-0009",
+        "layoutHints": {},
+        "props": {
+          "label": "Net Pay",
+          "value": "USD 6980.00",
+        },
+        "style": {},
+        "type": "summary-card",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Prescription 1`] = `
+{
+  "metadata": {
+    "title": "Prescription — Jordan Lee",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Prescription",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Patient: Jordan Lee",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Date: July 3, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "text": "Loratadine — 10mg",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "text": "Take once daily with water.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "divider-snapshot-0008",
+            "layoutHints": {},
+            "props": {},
+            "style": {},
+            "type": "divider",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Medications",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0009",
+        "layoutHints": {},
+        "props": {
+          "text": "Prescribing Physician: Dr. Emily Park",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > PurchaseOrder 1`] = `
+{
+  "metadata": {
+    "title": "PO PO-8842",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Purchase Order PO-8842",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Vendor: Global Supplies Inc.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Order Date: June 15, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "description",
+                  "title": "Description",
+                },
+                {
+                  "align": "right",
+                  "key": "quantity",
+                  "title": "Qty",
+                },
+                {
+                  "align": "right",
+                  "key": "unitPrice",
+                  "title": "Unit Price",
+                },
+                {
+                  "align": "right",
+                  "key": "total",
+                  "title": "Total",
+                },
+              ],
+              "rows": [
+                {
+                  "description": "Consulting — Q2 migration",
+                  "quantity": 40,
+                  "total": 6000,
+                  "unitPrice": 150,
+                },
+                {
+                  "description": "Platform support",
+                  "quantity": 1,
+                  "total": 6400,
+                  "unitPrice": 6400,
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "label": "Total",
+              "value": "12400",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Items",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Quotation 1`] = `
+{
+  "metadata": {
+    "title": "Quotation QT-2026-118",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Quotation QT-2026-118",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Prepared for: Contoso Ltd.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Valid until: August 15, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "description",
+                  "title": "Description",
+                },
+                {
+                  "align": "right",
+                  "key": "quantity",
+                  "title": "Qty",
+                },
+                {
+                  "align": "right",
+                  "key": "unitPrice",
+                  "title": "Unit Price",
+                },
+                {
+                  "align": "right",
+                  "key": "total",
+                  "title": "Total",
+                },
+              ],
+              "rows": [
+                {
+                  "description": "Consulting — Q2 migration",
+                  "quantity": 40,
+                  "total": 6000,
+                  "unitPrice": 150,
+                },
+                {
+                  "description": "Platform support",
+                  "quantity": 1,
+                  "total": 6400,
+                  "unitPrice": 6400,
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "label": "Quoted Total",
+              "value": "12400",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Quoted Items",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0009",
+            "layoutHints": {},
+            "props": {
+              "text": "• Prices valid until date shown.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000a",
+            "layoutHints": {},
+            "props": {
+              "text": "• Payment terms: Net 30.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-0008",
+        "layoutHints": {},
+        "props": {
+          "label": "Terms & Conditions",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Receipt 1`] = `
+{
+  "metadata": {
+    "title": "Receipt RC-9912",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Receipt RC-9912",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Customer: Jane Cooper",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Date: July 2, 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "summary-card-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Amount Paid",
+          "value": "USD 13454.00",
+        },
+        "style": {},
+        "type": "summary-card",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0006",
+        "layoutHints": {},
+        "props": {
+          "text": "Payment Method: Wire Transfer",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > ReportCard 1`] = `
+{
+  "metadata": {
+    "title": "Report Card — Alex Rivera",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Report Card",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Student: Alex Rivera",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Grade Level: 10th Grade · Term: Spring 2026",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "subject",
+                  "title": "Subject",
+                },
+                {
+                  "align": "center",
+                  "key": "grade",
+                  "title": "Grade",
+                },
+                {
+                  "key": "comments",
+                  "title": "Comments",
+                },
+              ],
+              "rows": [
+                {
+                  "comments": "Excellent problem solving.",
+                  "grade": "A",
+                  "subject": "Mathematics",
+                },
+                {
+                  "comments": "Strong analytical writing.",
+                  "grade": "B+",
+                  "subject": "English",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Grades",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > Resume 1`] = `
+{
+  "metadata": {
+    "title": "Resume — Jordan Kim",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Jordan Kim",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "subtitle-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Senior Product Manager",
+        },
+        "style": {},
+        "type": "subtitle",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Product leader with 10+ years building B2B SaaS platforms.",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "subtitle-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "text": "Senior Product Manager — Acme Corp",
+            },
+            "style": {},
+            "type": "subtitle",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "text": "2021–Present",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "text": "Owns roadmap for analytics suite serving 2,000+ enterprise customers.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "divider-snapshot-0009",
+            "layoutHints": {},
+            "props": {},
+            "style": {},
+            "type": "divider",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Experience",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-000b",
+            "layoutHints": {},
+            "props": {
+              "text": "Product Strategy · Roadmapping · SQL · User Research",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+        ],
+        "id": "section-snapshot-000a",
+        "layoutHints": {},
+        "props": {
+          "label": "Skills",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > SalesReport 1`] = `
+{
+  "metadata": {
+    "title": "Sales Report — Q2 2026",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Sales Report — Q2 2026",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "paragraph-snapshot-0004",
+            "layoutHints": {},
+            "props": {
+              "text": "Revenue grew 12% quarter-over-quarter driven by enterprise expansion.",
+            },
+            "style": {},
+            "type": "paragraph",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0005",
+            "layoutHints": {},
+            "props": {
+              "label": "Total Revenue",
+              "trend": "+12%",
+              "value": "$4.2M",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "label": "New Accounts",
+              "trend": "+5",
+              "value": "38",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "label": "Executive Summary",
+        },
+        "style": {},
+        "type": "section",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0008",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "region",
+                  "title": "Region",
+                },
+                {
+                  "align": "right",
+                  "key": "revenue",
+                  "title": "Revenue",
+                },
+                {
+                  "align": "right",
+                  "key": "growth",
+                  "title": "Growth",
+                },
+              ],
+              "rows": [
+                {
+                  "growth": "+14%",
+                  "region": "North America",
+                  "revenue": "$2.1M",
+                },
+                {
+                  "growth": "+9%",
+                  "region": "EMEA",
+                  "revenue": "$1.4M",
+                },
+                {
+                  "growth": "+11%",
+                  "region": "APAC",
+                  "revenue": "$700K",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+        ],
+        "id": "section-snapshot-0007",
+        "layoutHints": {},
+        "props": {
+          "label": "Regional Performance",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
+
+exports[`template layout snapshots > StudentTranscript 1`] = `
+{
+  "metadata": {
+    "title": "Transcript — Alex Rivera",
+  },
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "id": "title-snapshot-0002",
+        "layoutHints": {},
+        "props": {
+          "text": "Official Transcript",
+        },
+        "style": {},
+        "type": "title",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0003",
+        "layoutHints": {},
+        "props": {
+          "text": "Student: Alex Rivera (STU-4421)",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [],
+        "id": "paragraph-snapshot-0004",
+        "layoutHints": {},
+        "props": {
+          "text": "Program: Computer Science",
+        },
+        "style": {},
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "table-snapshot-0006",
+            "layoutHints": {},
+            "props": {
+              "columns": [
+                {
+                  "key": "code",
+                  "title": "Code",
+                },
+                {
+                  "key": "name",
+                  "title": "Course",
+                },
+                {
+                  "align": "center",
+                  "key": "grade",
+                  "title": "Grade",
+                },
+                {
+                  "align": "right",
+                  "key": "credits",
+                  "title": "Credits",
+                },
+              ],
+              "rows": [
+                {
+                  "code": "CS101",
+                  "credits": 3,
+                  "grade": "A",
+                  "name": "Intro to Programming",
+                },
+                {
+                  "code": "CS220",
+                  "credits": 4,
+                  "grade": "A-",
+                  "name": "Data Structures",
+                },
+              ],
+            },
+            "style": {},
+            "type": "table",
+          },
+          {
+            "children": [],
+            "id": "summary-card-snapshot-0007",
+            "layoutHints": {},
+            "props": {
+              "label": "Cumulative GPA",
+              "value": "3.85",
+            },
+            "style": {},
+            "type": "summary-card",
+          },
+        ],
+        "id": "section-snapshot-0005",
+        "layoutHints": {},
+        "props": {
+          "label": "Course History",
+        },
+        "style": {},
+        "type": "section",
+      },
+    ],
+    "id": "report-snapshot-0001",
+    "layoutHints": {},
+    "props": {},
+    "style": {},
+    "type": "report",
+  },
+  "version": "1.0.0",
+}
+`;
