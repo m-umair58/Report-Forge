@@ -519,13 +519,33 @@ export class ReportBuilder {
   }
 
   /**
-   * Renders the report and returns PDF bytes.
+   * Renders the report to an HTML file using the same pipeline as PDF.
    *
-   * @param options - Render options. Only `format: 'pdf'` is supported.
-   *                  Pass `output` to also write the file.
+   * @param outputPath - Destination file path (e.g. `'report.html'`).
+   */
+  async toHTML(outputPath: string): Promise<void> {
+    const { renderReportToHtml } = await import('./render-html.js');
+    await renderReportToHtml(this, outputPath);
+  }
+
+  /**
+   * Renders the report to an SVG file using the same pipeline as PDF.
+   *
+   * @param outputPath - Destination file path (e.g. `'report.svg'`).
+   */
+  async toSVG(outputPath: string): Promise<void> {
+    const { renderReportToSvg } = await import('./render-svg.js');
+    await renderReportToSvg(this, outputPath);
+  }
+
+  /**
+   * Renders the report and returns output bytes.
+   *
+   * @param options - Render options. Supports `format: 'pdf' | 'html' | 'svg'`.
    *
    * @example
    * const bytes = await report.render({ format: 'pdf' });
+   * const html = await report.render({ format: 'html' });
    */
   async render(options: RenderOptions): Promise<Uint8Array> {
     const { renderReport } = await import('./render-pdf.js');

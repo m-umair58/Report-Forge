@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="595.2755905511812" height="841.8897637795277" viewBox="0 0 595.2755905511812 841.8897637795277" role="img" aria-label="Format Comparison">
+<defs><style>text{font-family:Helvetica,Arial,sans-serif}</style></defs>
+<g class="rf-page" data-page="1" transform="translate(0 0)">
+<rect x="0" y="0" width="595.2755905511812" height="841.8897637795277" fill="#ffffff" />
+<text data-node="title-mrcd2px5-0002" x="72" y="96" font-size="24" font-weight="700" fill="#1a1a2e" text-anchor="start">Format Comparison</text>
+<text data-node="paragraph-mrcd2px5-0003" x="72" y="122.8" font-size="12" font-weight="400" fill="#1a1a1a" text-anchor="start">This document is rendered through the same pipeline to PDF, HTML, and SVG.</text>
+<line data-node="divider-mrcd2px5-0004" x1="72" y1="136.2" x2="523.2755905511812" y2="136.2" stroke="#cccccc" stroke-width="0.5" />
+<text data-node="paragraph-mrcd2px5-0006" x="72" y="159.2" font-size="12" font-weight="400" fill="#1a1a1a" text-anchor="start">All three formats consume the same display list and render operations.</text>
+<rect data-node="summary-card-mrcd2px5-0007" x="72" y="171.6" width="451.27559055118115" height="60" fill="#f8f9fa" stroke="#cccccc" stroke-width="0.5" rx="4" />
+<text data-node="summary-card-mrcd2px5-0007" x="80" y="191.6" font-size="12" font-weight="400" fill="#1a1a1a" text-anchor="start">Pipeline</text>
+<text data-node="summary-card-mrcd2px5-0007" x="80" y="210" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="start">Unified</text>
+<rect data-node="summary-card-mrcd2px5-0008" x="72" y="241.6" width="451.27559055118115" height="60" fill="#f8f9fa" stroke="#cccccc" stroke-width="0.5" rx="4" />
+<text data-node="summary-card-mrcd2px5-0008" x="80" y="261.6" font-size="12" font-weight="400" fill="#1a1a1a" text-anchor="start">Formats</text>
+<text data-node="summary-card-mrcd2px5-0008" x="80" y="280" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="start">PDF · HTML · SVG</text>
+</g>
+</svg>

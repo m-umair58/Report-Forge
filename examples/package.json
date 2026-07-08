@@ -22,7 +22,10 @@
     "corporate-theme": "tsx corporate-theme.ts",
     "dark-theme": "tsx dark-theme.ts",
     "healthcare-theme": "tsx healthcare-theme.ts",
-    "financial-theme": "tsx financial-theme.ts"
+    "financial-theme": "tsx financial-theme.ts",
+    "html-report": "tsx html-report.ts",
+    "svg-report": "tsx svg-report.ts",
+    "comparison": "tsx comparison.ts"
   },
   "dependencies": {
     "@reportforge/charts": "workspace:*",

@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HtmlRenderer > generates standalone HTML document 1`] = `
+"<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Monthly Sales Report</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:16px;background:#f3f4f6;font-family:Helvetica,Arial,sans-serif;color:#111827}
+.rf-document{display:flex;flex-direction:column;gap:24px}
+.rf-text{position:absolute;margin:0;white-space:pre-wrap;word-wrap:break-word}
+.rf-rect,.rf-image,.rf-line,.rf-table,.rf-svg{position:absolute}
+.rf-table{border-collapse:collapse;font-size:12px}
+.rf-table th,.rf-table td{border:1px solid #d1d5db;padding:4px 8px}
+.rf-table th{background:#f9fafb;font-weight:600}</style>
+</head>
+<body>
+<main class="rf-document" role="document">
+<section class="rf-page" data-page="1" style="width:793.33px;height:1122.67px;position:relative;margin:24px auto;background:#ffffff;box-shadow:0 2px 8px rgba(0,0,0,0.08);overflow:hidden" aria-label="Page 1">
+<p class="rf-text" data-node="title" style="left:96.00px;top:96.00px;width:601.33px;height:40.00px;font-family:Helvetica,Helvetica,Arial,sans-serif;font-size:32.00px;font-weight:700;line-height:1.20;color:#111827;text-align:left">Monthly Sales Report</p>
+<div class="rf-rect" data-node="card" style="left:96.00px;top:160.00px;width:266.67px;height:106.67px;background:#f3f4f6;border:1.33px solid #d1d5db;border-radius:10.67px"></div>
+<div class="rf-line" data-node="divider" style="left:96.00px;top:293.33px;width:601.33px;height:1.78px;border-top:1.33px solid #d1d5db"></div>
+</section>
+</main>
+</body>
+</html>
+"
+`;

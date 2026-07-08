@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SvgRenderer > generates valid SVG document 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="595" height="842" viewBox="0 0 595 842" role="img" aria-label="Monthly Sales Report">
+<defs><style>text{font-family:Helvetica,Arial,sans-serif}</style></defs>
+<g class="rf-page" data-page="1" transform="translate(0 0)">
+<rect x="0" y="0" width="595" height="842" fill="#ffffff" stroke="#e5e7eb" />
+<text data-node="title" x="72" y="96" font-size="24" font-weight="700" fill="#111827" text-anchor="start">Monthly Sales Report</text>
+<circle data-node="dot" cx="500" cy="100" r="20" fill="#2563eb" stroke="none" stroke-width="0" />
+<path data-node="chart" d="M 72 300 L 200 250 L 350 280 L 523 220" fill="none" stroke="#2563eb" stroke-width="2" />
+</g>
+</svg>
+"
+`;

@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/core",
+  "name": "@reportforge/renderer-svg",
   "version": "0.0.0",
-  "description": "Core package for ReportForge",
+  "description": "SVG renderer for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -14,28 +14,16 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
     "lint": "eslint src"
   },
   "dependencies": {
-    "@reportforge/components": "workspace:*",
     "@reportforge/display-list": "workspace:*",
-    "@reportforge/layout": "workspace:*",
-    "@reportforge/renderer-html": "workspace:*",
-    "@reportforge/renderer-pdf": "workspace:*",
-    "@reportforge/renderer-svg": "workspace:*",
     "@reportforge/render": "workspace:*",
-    "@reportforge/shared": "workspace:*",
-    "@reportforge/theme": "workspace:*",
-    "@reportforge/themes": "workspace:*"
-  },
-  "devDependencies": {
-    "pdf-lib": "1.17.1"
+    "@reportforge/shared": "workspace:*"
   },
   "publishConfig": {
     "access": "public"
