@@ -27,7 +27,9 @@
     "@reportforge/display-list": "workspace:*",
     "@reportforge/layout": "workspace:*",
     "@reportforge/renderer-pdf": "workspace:*",
-    "@reportforge/shared": "workspace:*"
+    "@reportforge/shared": "workspace:*",
+    "@reportforge/theme": "workspace:*",
+    "@reportforge/themes": "workspace:*"
   },
   "devDependencies": {
     "pdf-lib": "1.17.1"

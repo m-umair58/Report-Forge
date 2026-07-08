@@ -3,20 +3,22 @@ import { writeFile } from 'node:fs/promises';
 import { DisplayListGenerator } from '@reportforge/display-list';
 import { LayoutEngine } from '@reportforge/layout';
 import { PdfRenderer } from '@reportforge/renderer-pdf';
+import {
+  ThemeProvider,
+  applyThemeToLayout,
+  createDisplayListThemeOptions,
+  toLayoutTheme,
+} from '@reportforge/theme';
+import { defaultThemeRegistry } from '@reportforge/themes';
 import type { RenderOptions } from '@reportforge/shared';
 
 import type { ReportBuilder } from './builder.js';
 import { RenderError, ValidationFailureError } from './errors.js';
 
+const themeProvider = new ThemeProvider(defaultThemeRegistry);
+
 /**
  * Runs the full ReportForge pipeline and returns PDF bytes.
- *
- * ```
- * ReportBuilder → validate → LayoutEngine → DisplayListGenerator → PdfRenderer
- * ```
- *
- * @throws {ValidationFailureError} If the report fails validation.
- * @throws {RenderError} If any pipeline stage fails.
  */
 export async function renderReportToPdfBytes(builder: ReportBuilder): Promise<Uint8Array> {
   const validation = builder.validate();
@@ -26,18 +28,28 @@ export async function renderReportToPdfBytes(builder: ReportBuilder): Promise<Ui
   }
 
   try {
-    const layoutEngine = new LayoutEngine();
-    const layout = layoutEngine.layout(builder);
+    const theme = themeProvider.resolve(builder.getTheme());
+    const schema = builder.toSchema();
 
+    const layoutEngine = new LayoutEngine();
+    const rawLayout = layoutEngine.layout({ schema, theme: toLayoutTheme(theme) });
+
+    const themedLayout = applyThemeToLayout(rawLayout, theme, schema.root);
+
+    const displayOptions = createDisplayListThemeOptions(theme);
     const generator = new DisplayListGenerator();
-    const displayList = generator.generate(layout);
+    const displayList = generator.generate(themedLayout, {
+      defaultFont: displayOptions.defaultFont,
+      defaultFontSize: displayOptions.defaultFontSize,
+      defaultColor: displayOptions.defaultColor,
+    });
 
     const renderer = new PdfRenderer();
-    const schema = builder.toSchema();
     const meta = schema.metadata as Record<string, unknown>;
 
     const renderOptions: Parameters<typeof renderer.render>[1] = {
       creator: 'ReportForge',
+      pageBackground: displayOptions.pageBackground ?? undefined,
     };
 
     if (schema.metadata.title !== undefined) renderOptions.title = schema.metadata.title;
@@ -83,7 +95,6 @@ export async function renderReportToPdf(builder: ReportBuilder, outputPath: stri
 
 /**
  * Renders a report using `RenderOptions` from the shared contract.
- * Currently only `format: 'pdf'` is supported.
  */
 export async function renderReport(
   builder: ReportBuilder,

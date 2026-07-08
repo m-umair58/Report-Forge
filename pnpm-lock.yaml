@@ -56,6 +56,9 @@ importers:
       '@reportforge/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@reportforge/themes':
+        specifier: workspace:*
+        version: link:../packages/themes
     devDependencies:
       tsx:
         specifier: ^4.19.3
@@ -86,6 +89,12 @@ importers:
       '@reportforge/shared':
         specifier: workspace:*
         version: link:../shared
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@reportforge/themes':
+        specifier: workspace:*
+        version: link:../themes
     devDependencies:
       pdf-lib:
         specifier: 1.17.1
@@ -105,6 +114,9 @@ importers:
       '@reportforge/table':
         specifier: workspace:*
         version: link:../table
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   packages/renderer-pdf:
     dependencies:
@@ -135,7 +147,17 @@ importers:
 
   packages/templates: {}
 
-  packages/themes: {}
+  packages/theme:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/themes:
+    dependencies:
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   packages/typography:
     dependencies:

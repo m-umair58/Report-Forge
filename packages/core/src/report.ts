@@ -36,11 +36,8 @@ export class Report {
    *
    * @example
    * const report = Report.create({
-   *   metadata: {
-   *     title: 'Annual Report',
-   *     author: 'Finance Team',
-   *     theme: 'corporate',
-   *   },
+   *   metadata: { title: 'Annual Report', author: 'Finance Team' },
+   *   theme: CorporateTheme,
    * });
    */
   static create(options?: ReportCreateOptions): ReportBuilder {

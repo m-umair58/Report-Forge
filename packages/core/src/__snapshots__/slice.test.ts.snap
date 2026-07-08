@@ -4,7 +4,7 @@ exports[`vertical slice — PDF snapshot > matches expected PDF structure snapsh
 {
   "header": "%PDF",
   "pageCount": 1,
-  "sizeBucket": 1100,
+  "sizeBucket": 1200,
   "title": "Snapshot Test",
 }
 `;

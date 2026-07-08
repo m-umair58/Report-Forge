@@ -22,6 +22,9 @@
     "test": "vitest run",
     "lint": "eslint src"
   },
+  "dependencies": {
+    "@reportforge/theme": "workspace:*"
+  },
   "publishConfig": {
     "access": "public"
   }

@@ -11,9 +11,9 @@ export function themeToTableTheme(theme: ITheme) {
     borderWidth: borders.width,
     borderColor: borders.color,
     textColor: colors.text,
-    headerBackground: '#f0f0f0',
+    headerBackground: colors.background === '#ffffff' ? '#f0f0f0' : colors.background,
     headerColor: colors.text,
-    footerBackground: '#f5f5f5',
-    alternateRowBackground: '#fafafa',
+    footerBackground: colors.background === '#ffffff' ? '#f5f5f5' : colors.background,
+    alternateRowBackground: colors.background === '#ffffff' ? '#fafafa' : colors.background,
   };
 }
