@@ -74,8 +74,10 @@ export type {
   StatusPillProps,
   SubtitleProps,
   SummaryCardProps,
+  ColumnDefinition,
   TableColumn,
   TableProps,
+  TableStyle,
   TitleProps,
 } from './props.js';
 

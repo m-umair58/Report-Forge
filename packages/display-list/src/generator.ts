@@ -334,6 +334,7 @@ function generateInfoBoxCommands(
  * The renderer is responsible for decomposing this into individual row/cell draws.
  */
 function generateTableCommand(element: LayoutElement, ctx: DisplayContext): DrawTableCommand {
+  const tableLayout = element.props['tableLayout'];
   return {
     kind: 'draw-table',
     sourceNodeId: element.nodeId,
@@ -343,6 +344,9 @@ function generateTableCommand(element: LayoutElement, ctx: DisplayContext): Draw
     height: element.height,
     columns: propArray(element.props, 'columns'),
     rows: propArray(element.props, 'rows'),
+    ...(tableLayout !== undefined && typeof tableLayout === 'object'
+      ? { tableLayout: tableLayout as Record<string, unknown> }
+      : {}),
     opacity: ctx.defaultOpacity,
   };
 }

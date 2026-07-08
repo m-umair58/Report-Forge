@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/layout",
+  "name": "@reportforge/table",
   "version": "0.0.0",
-  "description": "Layout engine for ReportForge",
+  "description": "Professional table engine for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@reportforge/shared": "workspace:*",
-    "@reportforge/table": "workspace:*"
+    "@reportforge/typography": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

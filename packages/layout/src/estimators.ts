@@ -1,4 +1,7 @@
 import type { IReportNode, ITheme } from '@reportforge/shared';
+import { estimateTableHeight } from '@reportforge/table';
+
+import { themeToTableTheme } from './table-theme.js';
 
 /**
  * Height estimators for each built-in component type.
@@ -113,14 +116,14 @@ export function estimateNodeHeight(node: IReportNode, contentWidth: number, them
     }
 
     case 'table': {
-      // Row heights use a modest padding on top of line height.
-      const rowLineHeight = typography.fontSize * typography.lineHeight;
-      const headerRowHeight = rowLineHeight + 8; // header row padding
-      const dataRowHeight = rowLineHeight + 4; // data row padding
-
-      const rows = node.props['rows'];
-      const rowCount = Array.isArray(rows) ? rows.length : 0;
-      return headerRowHeight + rowCount * dataRowHeight;
+      const columns = Array.isArray(node.props['columns']) ? node.props['columns'] : [];
+      const rows = Array.isArray(node.props['rows']) ? node.props['rows'] : [];
+      return estimateTableHeight(
+        { columns: columns as never, rows: rows as never },
+        contentWidth,
+        themeToTableTheme(theme),
+        { style: node.props['tableStyle'] as never },
+      );
     }
 
     case 'image':

@@ -282,12 +282,7 @@ export interface DrawBarcodeCommand {
 }
 
 /**
- * Placeholder for a table drawing operation.
- * Carries the raw column and row data from the schema so that a capable renderer
- * can draw a complete table with headers, borders, and alternating row shading.
- *
- * Renderers that implement table support will decompose this into
- * multiple DrawRectangle and DrawText commands internally.
+ * Table drawing operation with precomputed layout from `@reportforge/table`.
  */
 export interface DrawTableCommand {
   readonly kind: 'draw-table';
@@ -304,6 +299,8 @@ export interface DrawTableCommand {
   readonly columns: readonly unknown[];
   /** Row data (forwarded from schema props). */
   readonly rows: readonly unknown[];
+  /** Precomputed table layout fragment from the table engine. */
+  readonly tableLayout?: Record<string, unknown>;
   /** Opacity (0–1). */
   readonly opacity: number;
 }

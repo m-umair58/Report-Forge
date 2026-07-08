@@ -395,16 +395,59 @@ describe('PdfRenderer', () => {
       await expect(renderer.render(dl)).resolves.toBeInstanceOf(Uint8Array);
     });
 
-    it('handles draw-table as placeholder rectangle', async () => {
+    it('renders draw-table with precomputed layout', async () => {
       const cmd = {
         kind: 'draw-table' as const,
         sourceNodeId: 'tbl1',
         x: 72,
         y: 200,
         width: 400,
-        height: 200,
-        columns: [{ key: 'name', label: 'Name' }],
+        height: 40,
+        columns: [{ key: 'name', title: 'Name' }],
         rows: [{ name: 'Alice' }],
+        tableLayout: {
+          columns: [{ key: 'name', title: 'Name', width: 400 }],
+          rows: [
+            {
+              kind: 'header',
+              y: 0,
+              height: 20,
+              cells: [
+                {
+                  columnKey: 'name',
+                  x: 0,
+                  y: 0,
+                  width: 400,
+                  height: 20,
+                  align: 'left',
+                  padding: { top: 4, right: 6, bottom: 4, left: 6 },
+                  backgroundColor: '#f0f0f0',
+                  text: { lines: ['Name'], lineHeight: 12 },
+                },
+              ],
+            },
+            {
+              kind: 'body',
+              y: 20,
+              height: 20,
+              cells: [
+                {
+                  columnKey: 'name',
+                  x: 0,
+                  y: 20,
+                  width: 400,
+                  height: 20,
+                  align: 'left',
+                  padding: { top: 4, right: 6, bottom: 4, left: 6 },
+                  text: { lines: ['Alice'], lineHeight: 12 },
+                },
+              ],
+            },
+          ],
+          width: 400,
+          height: 40,
+          style: { border: { width: 0.5, color: '#ccc' } },
+        },
         opacity: 1,
       };
       const dl = makeDisplayList([cmd]);
