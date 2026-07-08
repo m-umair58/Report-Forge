@@ -50,6 +50,9 @@ importers:
 
   examples:
     dependencies:
+      '@reportforge/components':
+        specifier: workspace:*
+        version: link:../packages/components
       '@reportforge/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -60,8 +63,17 @@ importers:
 
   packages/cli: {}
 
+  packages/components:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
   packages/core:
     dependencies:
+      '@reportforge/components':
+        specifier: workspace:*
+        version: link:../components
       '@reportforge/display-list':
         specifier: workspace:*
         version: link:../display-list

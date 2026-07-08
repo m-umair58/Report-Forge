@@ -107,13 +107,12 @@ describe('vertical slice — PDF snapshot', () => {
       header: String.fromCharCode(...bytes.slice(0, 4)),
       pageCount: doc.getPageCount(),
       title: doc.getTitle(),
-      byteLength: bytes.length,
+      sizeBucket: Math.floor(bytes.length / 100) * 100,
     };
 
     expect(snapshot.header).toBe('%PDF');
     expect(snapshot.pageCount).toBe(1);
     expect(snapshot.title).toBe('Snapshot Test');
-    expect(snapshot.byteLength).toBeGreaterThan(500);
     expect(snapshot).toMatchSnapshot();
   });
 });

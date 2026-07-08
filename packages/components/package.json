@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/core",
+  "name": "@reportforge/components",
   "version": "0.0.0",
-  "description": "Core package for ReportForge",
+  "description": "Official component library for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,14 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@reportforge/components": "workspace:*",
-    "@reportforge/display-list": "workspace:*",
-    "@reportforge/layout": "workspace:*",
-    "@reportforge/renderer-pdf": "workspace:*",
     "@reportforge/shared": "workspace:*"
-  },
-  "devDependencies": {
-    "pdf-lib": "1.17.1"
   },
   "publishConfig": {
     "access": "public"

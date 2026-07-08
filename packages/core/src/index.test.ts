@@ -497,7 +497,7 @@ describe('ComponentRegistry', () => {
     }
   });
 
-  it('createDefaultRegistry() list() contains all 14 built-in types', () => {
+  it('createDefaultRegistry() list() contains all built-in types', () => {
     const registry = createDefaultRegistry();
     expect(registry.list()).toHaveLength(BUILT_IN_COMPONENT_ENTRIES.length);
   });
