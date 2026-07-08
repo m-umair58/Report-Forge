@@ -59,6 +59,9 @@ importers:
       '@reportforge/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@reportforge/templates':
+        specifier: workspace:*
+        version: link:../packages/templates
       '@reportforge/themes':
         specifier: workspace:*
         version: link:../packages/themes
@@ -169,7 +172,29 @@ importers:
         specifier: workspace:*
         version: link:../typography
 
-  packages/templates: {}
+  packages/templates:
+    dependencies:
+      '@reportforge/core':
+        specifier: workspace:*
+        version: link:../core
+      '@reportforge/templates-core':
+        specifier: workspace:*
+        version: link:../templates-core
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
+
+  packages/templates-core:
+    dependencies:
+      '@reportforge/core':
+        specifier: workspace:*
+        version: link:../core
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   packages/theme:
     dependencies:

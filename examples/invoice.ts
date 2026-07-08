@@ -1,7 +1,7 @@
 /**
  * invoice.ts
  *
- * Professional invoice layout with structured sections and metadata.
+ * Generate a professional invoice using the Templates API.
  *
  * Run:
  *   pnpm example invoice
@@ -13,35 +13,39 @@
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { Report } from '@reportforge/core';
+import { Templates } from '@reportforge/templates';
+import { CorporateTheme } from '@reportforge/themes';
 
 const outputPath = join(fileURLToPath(import.meta.url), '..', 'invoice.pdf');
 
-const report = Report.create({
-  metadata: {
-    title: 'Invoice INV-2026-0042',
-    author: 'Acme Corp Billing',
-    subject: 'Invoice for professional services',
-    keywords: ['invoice', 'billing'],
+const report = Templates.Invoice.create(
+  {
+    invoiceNumber: 'INV-2026-0042',
+    billTo: 'Northwind Traders · accounts@northwind.example',
+    invoiceDate: 'July 1, 2026',
+    dueDate: 'July 31, 2026',
+    items: [
+      { description: 'Consulting services — Q2 platform migration', quantity: 40, unitPrice: 150, total: 6000 },
+      { description: 'Platform support retainer', quantity: 1, unitPrice: 6400, total: 6400 },
+    ],
+    subtotal: 12400,
+    tax: 1054,
+    total: 13454,
+    currency: 'USD',
+    terms: ['Payment due within 30 days.', 'Late payments subject to 1.5% monthly interest.'],
+    branding: {
+      companyName: 'ACME CORP',
+      address: '123 Business Street · San Francisco, CA 94105',
+      footerText: 'Payment terms: Net 30 · Thank you for your business.',
+    },
   },
-})
-  .header((h) => {
-    h.title('ACME CORP');
-    h.paragraph('123 Business Street · San Francisco, CA 94105');
-  })
-  .title('Invoice INV-2026-0042')
-  .paragraph('Bill To: Northwind Traders · accounts@northwind.example')
-  .paragraph('Invoice Date: July 1, 2026 · Due Date: July 31, 2026')
-  .divider()
-  .section((s) => {
-    s.subtitle('Services Rendered');
-    s.paragraph('Consulting services — Q2 2026 platform migration project.');
-    s.summaryCard({ label: 'Subtotal', value: '$12,400.00' });
-    s.summaryCard({ label: 'Tax (8.5%)', value: '$1,054.00' });
-    s.summaryCard({ label: 'Total Due', value: '$13,454.00' });
-  })
-  .divider()
-  .footer((f) => f.paragraph('Payment terms: Net 30 · Thank you for your business.'));
+  {
+    showLogo: false,
+    showFooter: true,
+    currency: 'USD',
+    theme: CorporateTheme,
+  },
+);
 
 await report.toPDF(outputPath);
 

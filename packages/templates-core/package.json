@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/templates",
+  "name": "@reportforge/templates-core",
   "version": "0.0.0",
-  "description": "Templates for ReportForge",
+  "description": "Core template engine for ReportForge document templates",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -14,9 +14,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
@@ -24,7 +22,7 @@
   },
   "dependencies": {
     "@reportforge/core": "workspace:*",
-    "@reportforge/templates-core": "workspace:*",
+    "@reportforge/shared": "workspace:*",
     "@reportforge/theme": "workspace:*"
   },
   "publishConfig": {
