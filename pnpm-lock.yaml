@@ -130,6 +130,39 @@ importers:
         specifier: workspace:*
         version: link:../shared
 
+  packages/example-plugin-chart:
+    dependencies:
+      '@reportforge/plugin-sdk':
+        specifier: workspace:*
+        version: link:../plugin-sdk
+
+  packages/example-plugin-component:
+    dependencies:
+      '@reportforge/plugin-sdk':
+        specifier: workspace:*
+        version: link:../plugin-sdk
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/example-plugin-template:
+    dependencies:
+      '@reportforge/plugin-sdk':
+        specifier: workspace:*
+        version: link:../plugin-sdk
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/example-plugin-theme:
+    dependencies:
+      '@reportforge/plugin-sdk':
+        specifier: workspace:*
+        version: link:../plugin-sdk
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
+
   packages/layout:
     dependencies:
       '@reportforge/chart-core':
@@ -144,6 +177,46 @@ importers:
       '@reportforge/theme':
         specifier: workspace:*
         version: link:../theme
+
+  packages/plugin-loader:
+    dependencies:
+      '@reportforge/components':
+        specifier: workspace:*
+        version: link:../components
+      '@reportforge/core':
+        specifier: workspace:*
+        version: link:../core
+      '@reportforge/plugin-sdk':
+        specifier: workspace:*
+        version: link:../plugin-sdk
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@reportforge/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@reportforge/themes':
+        specifier: workspace:*
+        version: link:../themes
+    devDependencies:
+      '@reportforge/example-plugin-chart':
+        specifier: workspace:*
+        version: link:../example-plugin-chart
+      '@reportforge/example-plugin-component':
+        specifier: workspace:*
+        version: link:../example-plugin-component
+      '@reportforge/example-plugin-template':
+        specifier: workspace:*
+        version: link:../example-plugin-template
+      '@reportforge/example-plugin-theme':
+        specifier: workspace:*
+        version: link:../example-plugin-theme
+
+  packages/plugin-sdk:
+    dependencies:
+      '@reportforge/shared':
+        specifier: workspace:*
+        version: link:../shared
 
   packages/renderer-pdf:
     dependencies:
