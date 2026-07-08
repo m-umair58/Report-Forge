@@ -529,7 +529,7 @@ describe('PdfRenderer', () => {
       expect(Array.isArray(result.warnings)).toBe(true);
     });
 
-    it('emits warnings for placeholder commands', async () => {
+    it('emits warnings for missing image sources', async () => {
       const cmd = {
         kind: 'draw-image' as const,
         sourceNodeId: 'img1',
@@ -545,7 +545,7 @@ describe('PdfRenderer', () => {
       const dl = makeDisplayList([cmd]);
       const result = await renderer.renderWithDiagnostics(dl);
       expect(result.warnings.length).toBeGreaterThan(0);
-      expect(result.warnings[0]).toContain('draw-image');
+      expect(result.warnings.some((w) => w.includes('draw-image'))).toBe(true);
     });
 
     it('emits warnings for draw-path (unsupported)', async () => {
@@ -563,10 +563,10 @@ describe('PdfRenderer', () => {
       expect(result.warnings.some((w) => w.includes('draw-path'))).toBe(true);
     });
 
-    it('emits warnings for unsupported draw-rectangle commands', async () => {
+    it('renders rounded rectangles without warnings', async () => {
       const dl = makeDisplayList([makeRectCmd({ cornerRadius: 8 })]);
       const result = await renderer.renderWithDiagnostics(dl);
-      expect(result.warnings.some((w) => w.includes('draw-rectangle'))).toBe(true);
+      expect(result.warnings.some((w) => w.includes('draw-rectangle'))).toBe(false);
     });
 
     it('multi-page document has correct pageCount', async () => {

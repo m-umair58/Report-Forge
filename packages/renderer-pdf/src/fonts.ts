@@ -1,4 +1,4 @@
-import { type PDFDocument, type PDFFont, StandardFonts } from 'pdf-lib';
+import { type PDFDocument, StandardFonts } from 'pdf-lib';
 
 import type { FontWeight } from '@reportforge/display-list';
 
@@ -8,6 +8,18 @@ type FontCacheKey = `${string}:${FontWeight}`;
 
 function makeKey(fontName: string, weight: FontWeight): FontCacheKey {
   return `${fontName.toLowerCase()}:${weight}`;
+}
+
+// ─── Font registration ────────────────────────────────────────────────────────
+
+/** Options for registering a custom font (embedding TTF/OTF is reserved for a future release). */
+export interface CustomFontRegistration {
+  readonly name: string;
+  readonly weight?: FontWeight;
+  /** Raw font bytes — not yet supported; registration is stored for future use. */
+  readonly bytes?: Uint8Array;
+  /** Map to a built-in standard font instead of embedding custom bytes. */
+  readonly standardFont?: StandardFonts;
 }
 
 // ─── Standard font resolution ─────────────────────────────────────────────────
@@ -21,13 +33,6 @@ function makeKey(fontName: string, weight: FontWeight): FontCacheKey {
  * - `Courier`, `courier-new`, `mono`, `monospace`, `consolas` → Courier
  *
  * Unknown font names fall back to Helvetica.
- *
- * Custom font embedding (TTF/OTF) is reserved for a future milestone.
- *
- * @example
- * resolveStandardFont('Helvetica', 'bold') // StandardFonts.HelveticaBold
- * resolveStandardFont('Courier', 'normal') // StandardFonts.Courier
- * resolveStandardFont('UnknownFont', 'bold') // StandardFonts.HelveticaBold (fallback)
  */
 export function resolveStandardFont(fontName: string, weight: FontWeight): StandardFonts {
   const name = fontName.toLowerCase();
@@ -52,11 +57,8 @@ export function resolveStandardFont(fontName: string, weight: FontWeight): Stand
     return bold ? StandardFonts.TimesRomanBold : StandardFonts.TimesRoman;
   }
 
-  // Default: Helvetica (covers 'helvetica', 'sans', 'arial', 'inter', unknowns)
   return bold ? StandardFonts.HelveticaBold : StandardFonts.Helvetica;
 }
-
-// ─── All standard font pairs ──────────────────────────────────────────────────
 
 /** All built-in standard fonts that the renderer preloads per document. */
 const STANDARD_FONT_DEFINITIONS: ReadonlyArray<{
@@ -77,31 +79,49 @@ const STANDARD_FONT_DEFINITIONS: ReadonlyArray<{
 /**
  * Manages font loading and resolution for a single PDF document.
  *
- * `FontManager` is created fresh per `PdfRenderer.render()` call. It:
- * 1. Eagerly loads all six standard fonts (Helvetica, Times-Roman, Courier
- *    × normal/bold) into the pdf-lib document.
- * 2. Resolves a `(fontName, weight)` pair to a pre-loaded `PDFFont`.
- * 3. Falls back to Helvetica when a requested font is not found.
- *
- * ## Future extension
- *
- * To add custom font embedding (TTF/OTF), call `pdf-lib`'s
- * `PDFDocument.embedFont(fontBytes)` and register the result via a future
- * `FontManager.registerCustom()` method.
- *
- * @example
- * const fontManager = new FontManager();
- * await fontManager.preload(pdfDoc);
- * const font = fontManager.resolve('Helvetica', 'bold');
- * page.drawText('Hello', { font, size: 12, ... });
+ * Preloads Helvetica, Times-Roman, and Courier (normal + bold) and supports
+ * registering additional font aliases via `register()`.
  */
 export class FontManager {
-  private readonly _cache = new Map<FontCacheKey, PDFFont>();
+  private readonly _cache = new Map<FontCacheKey, import('pdf-lib').PDFFont>();
+  private readonly _aliases = new Map<FontCacheKey, FontCacheKey>();
+  private readonly _pendingCustom: CustomFontRegistration[] = [];
 
   /**
-   * Eagerly loads all standard fonts into `pdfDoc`.
-   * Must be called once before any calls to `resolve()`.
+   * Registers a font alias for use during rendering.
+   *
+   * Custom byte embedding (`bytes`) is reserved for a future release — only
+   * `standardFont` remapping is active today.
+   *
+   * @example
+   * fontManager.register('Brand Sans', { standardFont: StandardFonts.Helvetica, weight: 'bold' });
    */
+  register(registration: CustomFontRegistration): void {
+    const weight = registration.weight ?? 'normal';
+
+    if (registration.bytes !== undefined) {
+      this._pendingCustom.push(registration);
+      return;
+    }
+
+    if (registration.standardFont !== undefined) {
+      for (const def of STANDARD_FONT_DEFINITIONS) {
+        if (def.standard === registration.standardFont && def.weight === weight) {
+          this._aliases.set(makeKey(registration.name, weight), makeKey(def.name, def.weight));
+          return;
+        }
+      }
+    }
+
+    this._aliases.set(makeKey(registration.name, weight), makeKey('helvetica', weight));
+  }
+
+  /** Returns custom font registrations awaiting future embedding support. */
+  get pendingCustomFonts(): readonly CustomFontRegistration[] {
+    return this._pendingCustom;
+  }
+
+  /** Eagerly loads all standard fonts into `pdfDoc`. */
   async preload(pdfDoc: PDFDocument): Promise<void> {
     for (const def of STANDARD_FONT_DEFINITIONS) {
       const key = makeKey(def.name, def.weight);
@@ -112,18 +132,15 @@ export class FontManager {
     }
   }
 
-  /**
-   * Resolves a font name and weight to a loaded `PDFFont`.
-   * Falls back to Helvetica (normal) if the requested combination was not loaded.
-   *
-   * @throws {Error} If `preload()` has not been called (no fonts loaded at all).
-   */
-  resolve(fontName: string, weight: FontWeight): PDFFont {
-    const key = makeKey(fontName, weight);
-    const cached = this._cache.get(key);
+  /** Resolves a font name and weight to a loaded `PDFFont`. */
+  resolve(fontName: string, weight: FontWeight): import('pdf-lib').PDFFont {
+    const directKey = makeKey(fontName, weight);
+    const aliasKey = this._aliases.get(directKey);
+    const lookupKey = aliasKey ?? directKey;
+
+    const cached = this._cache.get(lookupKey);
     if (cached !== undefined) return cached;
 
-    // Try resolving via the standard-font mapping and look up that key.
     const standardFont = resolveStandardFont(fontName, weight);
     for (const def of STANDARD_FONT_DEFINITIONS) {
       if (def.standard === standardFont) {
@@ -133,11 +150,10 @@ export class FontManager {
       }
     }
 
-    // Final fallback: Helvetica normal
     const fallback = this._cache.get(makeKey('helvetica', 'normal'));
     if (fallback !== undefined) return fallback;
 
-    throw new Error(`FontManager: no fonts loaded. Did you forget to call preload()?`);
+    throw new Error('FontManager: no fonts loaded. Did you forget to call preload()?');
   }
 
   /** Returns the number of fonts currently loaded. */

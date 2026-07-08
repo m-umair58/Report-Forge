@@ -1,7 +1,9 @@
 import { PDFDocument } from 'pdf-lib';
 
-import { FontManager } from './fonts.js';
-import { PdfPage } from './pdf-page.js';
+import type { CustomFontRegistration, FontManager } from './fonts.js';
+import { FontManager as FontManagerClass } from './fonts.js';
+import { ImageManager } from './images.js';
+import { PageRenderer } from './page-renderer.js';
 
 /** PDF document metadata fields. */
 export interface PdfDocumentMetadata {
@@ -15,44 +17,65 @@ export interface PdfDocumentMetadata {
 /**
  * A PDF document being assembled by the renderer.
  *
- * Wraps pdf-lib's `PDFDocument` and manages font loading and page creation.
- * pdf-lib is an internal implementation detail — this class is the public
- * abstraction for document-level operations.
- *
- * ## Minimal vertical slice
- *
- * This milestone only supports `draw-text` and `draw-line` render commands
- * (mapped from Title, Paragraph, and Divider components). All other command
- * types are ignored with a warning.
+ * Wraps pdf-lib's `PDFDocument` and manages fonts, images, and page creation.
  */
 export class PdfDocument {
   private readonly _doc: PDFDocument;
   private readonly _fontManager: FontManager;
-  private readonly _pages: PdfPage[] = [];
+  private readonly _imageManager: ImageManager;
+  private readonly _pageRenderer: PageRenderer;
 
-  private constructor(doc: PDFDocument, fontManager: FontManager) {
+  private constructor(
+    doc: PDFDocument,
+    fontManager: FontManager,
+    imageManager: ImageManager,
+    pageRenderer: PageRenderer,
+  ) {
     this._doc = doc;
     this._fontManager = fontManager;
+    this._imageManager = imageManager;
+    this._pageRenderer = pageRenderer;
   }
 
   /**
    * Creates a new empty PDF document with standard fonts preloaded.
    */
-  static async create(): Promise<PdfDocument> {
+  static async create(
+    fontManager?: FontManager,
+    options?: { readonly basePath?: string },
+  ): Promise<PdfDocument> {
     const doc = await PDFDocument.create();
-    const fontManager = new FontManager();
-    await fontManager.preload(doc);
-    return new PdfDocument(doc, fontManager);
+    const fonts = fontManager ?? new FontManagerClass();
+    await fonts.preload(doc);
+
+    const imageManager = new ImageManager(doc);
+    if (options?.basePath !== undefined) {
+      imageManager.setBasePath(options.basePath);
+    }
+
+    const pageRenderer = new PageRenderer(fonts, imageManager);
+    return new PdfDocument(doc, fonts, imageManager, pageRenderer);
   }
 
-  /** Number of pages added so far. */
   get pageCount(): number {
-    return this._pages.length;
+    return this._doc.getPageCount();
   }
 
-  /** All pages in document order. */
-  get pages(): readonly PdfPage[] {
-    return this._pages;
+  get fontManager(): FontManager {
+    return this._fontManager;
+  }
+
+  get imageManager(): ImageManager {
+    return this._imageManager;
+  }
+
+  get pageRenderer(): PageRenderer {
+    return this._pageRenderer;
+  }
+
+  /** Underlying pdf-lib document (for advanced use). */
+  get libDocument(): PDFDocument {
+    return this._doc;
   }
 
   /** Sets PDF document metadata (title, author, etc.). */
@@ -67,22 +90,15 @@ export class PdfDocument {
     this._doc.setModificationDate(new Date());
   }
 
-  /**
-   * Adds a new page with the given dimensions (in points).
-   * @returns The new `PdfPage` ready for drawing commands.
-   */
-  addPage(width: number, height: number): PdfPage {
-    const libPage = this._doc.addPage([width, height]);
-    const page = new PdfPage(libPage, width, height, this._fontManager);
-    this._pages.push(page);
-    return page;
+  /** Adds a new page with the given dimensions (in points). */
+  addPage(width: number, height: number): import('pdf-lib').PDFPage {
+    return this._doc.addPage([width, height]);
   }
 
-  /**
-   * Serialises the document to PDF bytes.
-   * @param compress - When true, enables object stream compression.
-   */
+  /** Serialises the document to PDF bytes. */
   async save(compress = true): Promise<Uint8Array> {
     return this._doc.save({ useObjectStreams: compress });
   }
 }
+
+export type { CustomFontRegistration };
