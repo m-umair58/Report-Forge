@@ -80,6 +80,26 @@ function propArray(props: Readonly<Record<string, unknown>>, key: string): reado
   return Array.isArray(val) ? val : [];
 }
 
+function styleString(style: Readonly<Record<string, unknown>> | undefined, key: string, fallback: string): string {
+  const val = style?.[key];
+  return typeof val === 'string' ? val : fallback;
+}
+
+function styleNumber(style: Readonly<Record<string, unknown>> | undefined, key: string, fallback: number): number {
+  const val = style?.[key];
+  return typeof val === 'number' ? val : fallback;
+}
+
+function styleFontWeight(
+  style: Readonly<Record<string, unknown>> | undefined,
+  fallback: DrawTextCommand['fontWeight'],
+): DrawTextCommand['fontWeight'] {
+  const val = style?.['fontWeight'];
+  if (val === 'bold' || val === 'normal') return val;
+  if (val === 700 || val === '700') return 'bold';
+  return fallback;
+}
+
 // ─── Per-element command generators ──────────────────────────────────────────
 
 /**
@@ -91,22 +111,23 @@ function generateTextCommand(
   fontWeight: DrawTextCommand['fontWeight'],
   ctx: DisplayContext,
 ): DrawTextCommand {
+  const style = element.style;
   return {
     kind: 'draw-text',
     sourceNodeId: element.nodeId,
     text: propString(element.props, 'text', '(untitled)'),
-    font: ctx.defaultFont,
-    fontSize,
-    fontWeight,
-    lineHeight: DEFAULT_LINE_HEIGHT,
-    color: ctx.defaultColor,
+    font: styleString(style, 'fontFamily', ctx.defaultFont),
+    fontSize: styleNumber(style, 'fontSize', fontSize),
+    fontWeight: styleFontWeight(style, fontWeight),
+    lineHeight: styleNumber(style, 'lineHeight', DEFAULT_LINE_HEIGHT),
+    color: styleString(style, 'color', ctx.defaultColor),
     x: element.x,
     y: element.y,
     width: element.width,
     height: element.height,
     rotation: 0,
-    opacity: ctx.defaultOpacity,
-    textAlign: 'left',
+    opacity: styleNumber(style, 'opacity', ctx.defaultOpacity),
+    textAlign: (styleString(style, 'alignment', 'left') as DrawTextCommand['textAlign']) || 'left',
   };
 }
 
@@ -122,8 +143,8 @@ function generateDividerCommand(element: LayoutElement, ctx: DisplayContext): Dr
     y1: midY,
     x2: element.x + element.width,
     y2: midY,
-    color: DEFAULT_DIVIDER_COLOR,
-    width: 0.5,
+    color: styleString(element.style, 'borderColor', DEFAULT_DIVIDER_COLOR),
+    width: styleNumber(element.style, 'borderWidth', 0.5),
     opacity: ctx.defaultOpacity,
   };
 }
@@ -161,17 +182,14 @@ function generateHeaderCommand(element: LayoutElement, ctx: DisplayContext): Dra
     y: element.y,
     width: element.width,
     height: element.height,
-    fillColor: DEFAULT_ACCENT_BACKGROUND,
-    borderColor: DEFAULT_BORDER_COLOR,
-    borderWidth: 0.5,
-    cornerRadius: 0,
+    fillColor: styleString(element.style, 'background', DEFAULT_ACCENT_BACKGROUND),
+    borderColor: styleString(element.style, 'borderColor', DEFAULT_BORDER_COLOR),
+    borderWidth: styleNumber(element.style, 'borderWidth', 0.5),
+    cornerRadius: styleNumber(element.style, 'borderRadius', 0),
     opacity: ctx.defaultOpacity,
   };
 }
 
-/**
- * Converts a footer element into a DrawRectangleCommand with a light background.
- */
 function generateFooterCommand(element: LayoutElement, ctx: DisplayContext): DrawRectangleCommand {
   return {
     kind: 'draw-rectangle',
@@ -180,10 +198,10 @@ function generateFooterCommand(element: LayoutElement, ctx: DisplayContext): Dra
     y: element.y,
     width: element.width,
     height: element.height,
-    fillColor: DEFAULT_ACCENT_BACKGROUND,
-    borderColor: DEFAULT_BORDER_COLOR,
-    borderWidth: 0.5,
-    cornerRadius: 0,
+    fillColor: styleString(element.style, 'background', DEFAULT_ACCENT_BACKGROUND),
+    borderColor: styleString(element.style, 'borderColor', DEFAULT_BORDER_COLOR),
+    borderWidth: styleNumber(element.style, 'borderWidth', 0.5),
+    cornerRadius: styleNumber(element.style, 'borderRadius', 0),
     opacity: ctx.defaultOpacity,
   };
 }
@@ -428,10 +446,10 @@ function generateSummaryCardCommands(
     y: element.y,
     width: element.width,
     height: element.height,
-    fillColor: '#ffffff',
-    borderColor: DEFAULT_BORDER_COLOR,
-    borderWidth: 0.5,
-    cornerRadius: 4,
+    fillColor: styleString(element.style, 'background', '#ffffff'),
+    borderColor: styleString(element.style, 'borderColor', DEFAULT_BORDER_COLOR),
+    borderWidth: styleNumber(element.style, 'borderWidth', 0.5),
+    cornerRadius: styleNumber(element.style, 'borderRadius', 4),
     opacity: ctx.defaultOpacity,
   };
 
@@ -439,11 +457,11 @@ function generateSummaryCardCommands(
     kind: 'draw-text',
     sourceNodeId: element.nodeId,
     text: propString(element.props, 'label', ''),
-    font: ctx.defaultFont,
-    fontSize: ctx.defaultFontSize,
-    fontWeight: 'normal',
+    font: styleString(element.style, 'fontFamily', ctx.defaultFont),
+    fontSize: styleNumber(element.style, 'fontSize', ctx.defaultFontSize),
+    fontWeight: styleFontWeight(element.style, 'normal'),
     lineHeight: DEFAULT_LINE_HEIGHT,
-    color: '#888888',
+    color: styleString(element.style, 'color', '#888888'),
     x: element.x + 8,
     y: element.y + 8,
     width: element.width - 16,
@@ -453,16 +471,16 @@ function generateSummaryCardCommands(
     textAlign: 'left',
   };
 
-  const valueFontSize = ctx.defaultFontSize * 1.5;
+  const valueFontSize = styleNumber(element.style, 'fontSize', ctx.defaultFontSize * 1.5);
   const value: DrawTextCommand = {
     kind: 'draw-text',
     sourceNodeId: element.nodeId,
     text: propString(element.props, 'value', ''),
-    font: ctx.defaultFont,
+    font: styleString(element.style, 'fontFamily', ctx.defaultFont),
     fontSize: valueFontSize,
-    fontWeight: 'bold',
+    fontWeight: styleFontWeight(element.style, 'bold'),
     lineHeight: DEFAULT_LINE_HEIGHT,
-    color: ctx.defaultColor,
+    color: styleString(element.style, 'color', ctx.defaultColor),
     x: element.x + 8,
     y: element.y + 8 + ctx.defaultFontSize * DEFAULT_LINE_HEIGHT + 4,
     width: element.width - 16,

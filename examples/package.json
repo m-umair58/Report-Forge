@@ -10,11 +10,16 @@
     "simple-report": "tsx simple-report.ts",
     "sales-table": "tsx sales-table.ts",
     "inventory-table": "tsx inventory-table.ts",
-    "financial-report": "tsx financial-report.ts"
+    "financial-report": "tsx financial-report.ts",
+    "corporate-theme": "tsx corporate-theme.ts",
+    "dark-theme": "tsx dark-theme.ts",
+    "healthcare-theme": "tsx healthcare-theme.ts",
+    "financial-theme": "tsx financial-theme.ts"
   },
   "dependencies": {
     "@reportforge/components": "workspace:*",
-    "@reportforge/core": "workspace:*"
+    "@reportforge/core": "workspace:*",
+    "@reportforge/themes": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.3"

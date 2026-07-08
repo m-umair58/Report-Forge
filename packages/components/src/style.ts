@@ -40,6 +40,13 @@ export interface BaseComponentProps {
   readonly margin?: SpacingValue;
   readonly padding?: SpacingValue;
   readonly visibility?: Visibility;
+  /** Theme color token or hex value (resolved at render time). */
+  readonly color?: string;
+  /** Theme background token or hex value (resolved at render time). */
+  readonly background?: string;
+  /** Theme font size token or point value (resolved at render time). */
+  readonly fontSize?: number | string;
+  readonly fontWeight?: string | number;
 }
 
 /**

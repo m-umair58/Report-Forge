@@ -1,7 +1,7 @@
 {
-  "name": "@reportforge/layout",
+  "name": "@reportforge/theme",
   "version": "0.0.0",
-  "description": "Layout engine for ReportForge",
+  "description": "Theme and styling engine for ReportForge",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,9 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@reportforge/shared": "workspace:*",
-    "@reportforge/table": "workspace:*",
-    "@reportforge/theme": "workspace:*"
+    "@reportforge/shared": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

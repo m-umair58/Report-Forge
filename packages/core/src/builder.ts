@@ -251,8 +251,10 @@ export class SectionBuilder {
 
 /** Options for constructing a new report. */
 export interface ReportCreateOptions {
-  /** Report-level metadata (title, author, theme, etc.). */
+  /** Report-level metadata (title, author, etc.). */
   readonly metadata?: ReportMetadata;
+  /** Global theme (object or registered theme name). */
+  readonly theme?: import('@reportforge/theme').ThemeInput;
 }
 
 /**
@@ -279,6 +281,7 @@ export class ReportBuilder {
   private readonly idGen: (type: string) => string;
   private readonly registry: ComponentRegistry;
   private readonly metadata: ReportMetadata;
+  private readonly theme?: import('@reportforge/theme').ThemeInput;
 
   /** @internal — use `Report.create()` or `Report.fromJSON()` */
   constructor(
@@ -286,11 +289,20 @@ export class ReportBuilder {
     metadata: ReportMetadata,
     registry: ComponentRegistry,
     idGen: (type: string) => string,
+    theme?: import('@reportforge/theme').ThemeInput,
   ) {
     this.rootNode = rootNode;
     this.metadata = metadata;
     this.registry = registry;
     this.idGen = idGen;
+    if (theme !== undefined) {
+      this.theme = theme;
+    }
+  }
+
+  /** Returns the configured theme input, if any. */
+  getTheme(): import('@reportforge/theme').ThemeInput | undefined {
+    return this.theme ?? this.metadata.theme;
   }
 
   // ─── Content methods ───────────────────────────────────────────────────────
@@ -527,7 +539,7 @@ export function createReportBuilder(options?: ReportCreateOptions): ReportBuilde
   const registry = createDefaultRegistry();
   const metadata: ReportMetadata = options?.metadata ?? {};
   const rootNode = createNode(idGen(COMPONENT_TYPES.REPORT), COMPONENT_TYPES.REPORT, {}, null);
-  return new ReportBuilder(rootNode, metadata, registry, idGen);
+  return new ReportBuilder(rootNode, metadata, registry, idGen, options?.theme);
 }
 
 /**
